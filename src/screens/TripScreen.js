@@ -5,7 +5,7 @@ export default class AirplanesScreen extends React.Component {
 
     render() {
         return <View style={styles.container}>
-            <Text>City Screen</Text>
+            <Text>Trip Screen</Text>
             <Button title={'City'} onPress={() => this.props.navigation.navigate('City')}></Button>
         </View>;
     }
