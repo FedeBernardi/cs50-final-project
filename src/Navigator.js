@@ -7,6 +7,8 @@ import LodginScreen from './screens/LodginScreen';
 import AirplanesScreen from './screens/AirplanesScreen';
 import TicketsScreen from './screens/TicketsScreen';
 import TripScreen from './screens/TripScreen';
+import AddTripScreen from './screens/AddTripScreen';
+
 import SideMenu from './components/SideMenu';
 
 import { APP_NAME } from './Utils/constants';
@@ -18,7 +20,8 @@ const StackNavigator = createStackNavigator(
         Airplanes: AirplanesScreen,
         Lodgin: LodginScreen,
         Itinerary: ItineraryScreen,
-        Tickets: TicketsScreen
+        Tickets: TicketsScreen,
+        AddTrip: AddTripScreen
     },
     {
         headerLayoutPreset: 'center',
