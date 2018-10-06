@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, ScrollView, StyleSheet} from 'react-native';
 import {Constants} from 'expo';
 
 import AddTripForm from '../components/AddTripForm';
@@ -11,12 +11,14 @@ export default class AddTripScreen extends React.Component {
 
     render() {
         return <View style={styles.container}>
-            <View style={styles.titleContainer}>
-                <Text style={styles.title}>Create a new Trip!</Text>
-            </View>
-            <View style={styles.formContainer}>
-                <AddTripForm />
-            </View>
+            <ScrollView contentContainerStyle={styles.scroll}>
+                <View style={styles.titleContainer}>
+                    <Text style={styles.title}>Create a new Trip!</Text>
+                </View>
+                <View style={styles.formContainer}>
+                    <AddTripForm />
+                </View>
+            </ScrollView>
         </View>;
     }
 } 
@@ -24,11 +26,14 @@ export default class AddTripScreen extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
         marginTop: Constants.statusBarHeight
     },
+    scroll: {
+        width: '100%'
+    },
     titleContainer: {
+        justifyContent: 'center',
+        alignItems: 'center',
         marginTop: 10,
         marginBottom: 25
     },

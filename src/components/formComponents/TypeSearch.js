@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, StyleSheet, TextInput, TouchableOpacity} from 'react-native';
+import {View, Text, StyleSheet, TextInput, TouchableOpacity, TouchableWithoutFeedback} from 'react-native';
 import PropTypes from 'prop-types';
 
 import {isEmpty} from '../../utils/functions';
@@ -9,6 +9,7 @@ export default class TypeSearch extends React.Component {
     static propTypes = {
         label: PropTypes.string,
         placeholder: PropTypes.string,
+        index: PropTypes.number,
         searchFunction: PropTypes.func.isRequired,
         mapToComponent: PropTypes.func.isRequired,
         onSelection: PropTypes.func.isRequired
@@ -24,13 +25,14 @@ export default class TypeSearch extends React.Component {
         this.handleOnChange = this.handleOnChange.bind(this);
         this.handleSelection = this.handleSelection.bind(this);
         this.onFocusHandler = this.onFocusHandler.bind(this);
+        this.onBlurHandler = this.onBlurHandler.bind(this);
     }
 
     // Erases the previous selection, if there was any, and resets the
     // input to search again. Also it executes the onSelection callback
     // to tell the parent component that there is no selected option now.
     onFocusHandler() {
-        this.setState({selectedOption: {}});
+        this.setState({selectedOption: {}, resultsFromSearch: []});
         this.props.onSelection('');
     }
 
@@ -46,7 +48,7 @@ export default class TypeSearch extends React.Component {
     // Executes the onSelection callback, where the selected input is
     // passed to the parent component. The resultsFromSearch is cleaned.
     handleSelection(selectedOption) {
-        this.props.onSelection(selectedOption);
+        this.props.onSelection(selectedOption, this.props.index);
         this.setState({resultsFromSearch: [], selectedOption});
         this.refs['input'].blur();
     }
@@ -62,6 +64,7 @@ export default class TypeSearch extends React.Component {
                 style={styles.input}
                 value={isEmpty(selectedOption) ? null : selectedOption.description}
                 onFocus={this.onFocusHandler}
+                onBlur={this.onBlurHandler}
                 placeholder={placeholder}
                 onChangeText={this.handleOnChange}
                 underlineColorAndroid='transparent'
