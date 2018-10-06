@@ -11,7 +11,7 @@ import AddTripScreen from './screens/AddTripScreen';
 
 import SideMenu from './components/SideMenu';
 
-import { APP_NAME } from './Utils/constants';
+import { APP_NAME } from './utils/constants';
 
 const StackNavigator = createStackNavigator(
     {

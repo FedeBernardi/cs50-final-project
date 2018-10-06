@@ -1,6 +1,9 @@
+import {mockedCities} from '../../staticData';
+
 const BASE_URL = 'https://maps.googleapis.com';
 
 export async function getPlaces(input) {
+    return mockedCities;
     const response = await fetch(`${BASE_URL}/maps/api/place/autocomplete/json?input=${input}&type=(cities)&key=${API_KEY}`);
     const data = await response.json();
 

@@ -11,8 +11,12 @@ export default class AddTripScreen extends React.Component {
 
     render() {
         return <View style={styles.container}>
-            <Text>Add Trip Screen</Text>
-            <AddTripForm />
+            <View style={styles.titleContainer}>
+                <Text style={styles.title}>Create a new Trip!</Text>
+            </View>
+            <View style={styles.formContainer}>
+                <AddTripForm />
+            </View>
         </View>;
     }
 } 
@@ -23,5 +27,17 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: Constants.statusBarHeight
+    },
+    titleContainer: {
+        marginTop: 10,
+        marginBottom: 25
+    },
+    title: {
+        fontSize: 30
+    },
+    formContainer: {
+        flex: 1,
+        alignItems: 'flex-start',
+        width: '100%'
     }
 });

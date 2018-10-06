@@ -1,5 +1,5 @@
 import {ADD_CITY} from '../actions';
-import {mergeObjects} from '../../Utils/functions';
+import {mergeObjects} from '../../utils/functions';
 
 const initialState = {
     cities: []
