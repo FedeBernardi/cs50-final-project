@@ -2,6 +2,8 @@ import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {Constants} from 'expo';
 
+import AddTripForm from '../components/AddTripForm';
+
 export default class AddTripScreen extends React.Component {
     static navigationOptions = () => ({
         header: null
@@ -10,6 +12,7 @@ export default class AddTripScreen extends React.Component {
     render() {
         return <View style={styles.container}>
             <Text>Add Trip Screen</Text>
+            <AddTripForm />
         </View>;
     }
 } 
