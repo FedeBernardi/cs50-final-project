@@ -5,15 +5,38 @@ import {Ionicons} from '@expo/vector-icons';
 
 export default class AddButton extends React.Component {
     static propTypes = {
-        callback: PropTypes.func.isRequired,
-        text: PropTypes.string
+        text: PropTypes.string,
+        disabled: PropTypes.bool,
+        callback: PropTypes.func.isRequired
+    }
+
+    constructor(props) {
+        super(props);
+
+        this.pressHandler = this.pressHandler.bind(this);
+    }
+
+    pressHandler() {
+        if (!this.isButtonDisabled()) {
+            this.props.callback();
+        }
+    }
+
+    isButtonDisabled() {
+        const {disabled} = this.props;
+
+        return typeof disabled !== 'undefined' && disabled;
     }
 
     render() {
-        return <TouchableHighlight onPress={this.props.callback}>
+        return <TouchableHighlight onPress={this.pressHandler}>
             <View>
                 {this.props.text && <Text>{this.props.text}</Text>}
-                <Ionicons name={'ios-add-circle-outline'} size={40}/>
+                <Ionicons
+                    name={'ios-add-circle-outline'}
+                    size={40}
+                    style={this.isButtonDisabled() ? {color: 'grey'} : {}}
+                />
             </View>
         </TouchableHighlight>
     }

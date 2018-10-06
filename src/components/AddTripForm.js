@@ -2,6 +2,7 @@ import React from 'react';
 import {KeyboardAvoidingView, StyleSheet, Text, View} from 'react-native';
 
 import {getPlaces} from '../api/placesApi';
+import {isEmpty} from '../utils/functions';
 
 import TypeSearch from './formComponents/TypeSearch';
 import CityOption from './formComponents/CityOption';
@@ -18,6 +19,7 @@ export default class AddTripForm extends React.Component {
 
         this.selectionHandler = this.selectionHandler.bind(this);
         this.addNewCity = this.addNewCity.bind(this);
+        this.isAddCityDisabled = this.isAddCityDisabled.bind(this);
     }
 
     // Calls the api to get the places to suggest.
@@ -39,6 +41,12 @@ export default class AddTripForm extends React.Component {
         this.setState({cities: [...this.state.cities, {}]})
     }
 
+    isAddCityDisabled() {
+        let emptyCities = this.state.cities.filter((city) => isEmpty(city));
+
+        return !!emptyCities.length;
+    }
+
     render() {
         return <KeyboardAvoidingView
             behavior="position"
@@ -47,7 +55,7 @@ export default class AddTripForm extends React.Component {
         >
             <View style={styles.citiesHeader}>
                 <Text style={[styles.label, styles.citiesLabel]}>Cities</Text>
-                <AddButton callback={this.addNewCity}/>
+                <AddButton disabled={this.isAddCityDisabled()} callback={this.addNewCity}/>
             </View>
             {this.state.cities.map((value, index) => (
                 <TypeSearch

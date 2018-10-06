@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, StyleSheet, TextInput, TouchableOpacity, TouchableWithoutFeedback} from 'react-native';
+import {View, Text, StyleSheet, TextInput, TouchableOpacity} from 'react-native';
 import PropTypes from 'prop-types';
 
 import {isEmpty} from '../../utils/functions';
@@ -25,7 +25,6 @@ export default class TypeSearch extends React.Component {
         this.handleOnChange = this.handleOnChange.bind(this);
         this.handleSelection = this.handleSelection.bind(this);
         this.onFocusHandler = this.onFocusHandler.bind(this);
-        this.onBlurHandler = this.onBlurHandler.bind(this);
     }
 
     // Erases the previous selection, if there was any, and resets the
