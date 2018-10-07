@@ -3,11 +3,12 @@ import {TouchableHighlight, Text, View} from 'react-native';
 import PropTypes from 'prop-types';
 import {Ionicons} from '@expo/vector-icons';
 
-export default class AddButton extends React.Component {
+export default class IconButton extends React.Component {
     static propTypes = {
+        iconName: PropTypes.string.isRequired,
+        callback: PropTypes.func.isRequired,
         text: PropTypes.string,
         disabled: PropTypes.bool,
-        callback: PropTypes.func.isRequired
     }
 
     constructor(props) {
@@ -33,7 +34,7 @@ export default class AddButton extends React.Component {
             <View>
                 {this.props.text && <Text>{this.props.text}</Text>}
                 <Ionicons
-                    name={'ios-add-circle-outline'}
+                    name={this.props.iconName}
                     size={40}
                     style={this.isButtonDisabled() ? {color: 'grey'} : {}}
                 />
