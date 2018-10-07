@@ -4,7 +4,7 @@ import {Constants} from 'expo';
 
 import {trips} from '../../staticData';
 
-import AddButton from './AddButton';
+import IconButton from './IconButton';
 
 const tripItem = ({item}) => (<View style={styles.tripContainer}>
     <Text style={styles.tripTitle}>{item.title}</Text>
@@ -16,10 +16,10 @@ export default class SideMenu extends React.Component {
     constructor(props) {
         super(props);
 
-        this.addButtonCb = this.addButtonCb.bind(this);
+        this.IconButtonCb = this.IconButtonCb.bind(this);
     }
 
-    addButtonCb() {
+    IconButtonCb() {
         this.props.navigation.navigate('AddTrip');
     }
 
@@ -27,7 +27,7 @@ export default class SideMenu extends React.Component {
         return <View style={styles.container}>
             <View style={styles.header}>
                 <Text style={styles.title}>Your Trips</Text>
-                <AddButton callback={this.addButtonCb}/>
+                <IconButton iconName={'ios-add-circle-outline'} callback={this.IconButtonCb}/>
             </View>
             <FlatList
                 data={trips}

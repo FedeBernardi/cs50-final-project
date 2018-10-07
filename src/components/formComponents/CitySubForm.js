@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {Button, View, StyleSheet} from 'react-native';
 
 import {getPlaces} from '../../api/placesApi';
+import {isEmpty} from '../../utils/functions';
 
 import TypeSearch from './TypeSearch';
 import CityOption from './CityOption';
@@ -44,7 +45,7 @@ export default class CitySubForm extends React.Component {
     // Formats and sends the form info to the parent component
     onSave() {
         const cityObject = {
-            city: this.state.selectedCity.description,
+            cityName: this.state.selectedCity.description,
             id: this.state.selectedCity.id,
             dates: {
                 from: this.state.fromDate,
@@ -87,7 +88,7 @@ export default class CitySubForm extends React.Component {
                     selectedDate={this.state.toDate}
                 />
             </View>
-            <Button title='Save!' onPress={this.onSave}/>
+            <Button title='Add!' onPress={this.onSave} disabled={isEmpty(this.state.selectedCity)}/>
         </View>;
     }
 }
