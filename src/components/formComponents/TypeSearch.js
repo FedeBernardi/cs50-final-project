@@ -9,7 +9,6 @@ export default class TypeSearch extends React.Component {
     static propTypes = {
         label: PropTypes.string,
         placeholder: PropTypes.string,
-        index: PropTypes.number,
         searchFunction: PropTypes.func.isRequired,
         mapToComponent: PropTypes.func.isRequired,
         onSelection: PropTypes.func.isRequired
@@ -47,7 +46,7 @@ export default class TypeSearch extends React.Component {
     // Executes the onSelection callback, where the selected input is
     // passed to the parent component. The resultsFromSearch is cleaned.
     handleSelection(selectedOption) {
-        this.props.onSelection(selectedOption, this.props.index);
+        this.props.onSelection(selectedOption);
         this.setState({resultsFromSearch: [], selectedOption});
         this.refs['input'].blur();
     }

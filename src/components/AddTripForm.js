@@ -1,11 +1,9 @@
 import React from 'react';
 import {KeyboardAvoidingView, StyleSheet, Text, View} from 'react-native';
 
-import {getPlaces} from '../api/placesApi';
 import {isEmpty} from '../utils/functions';
 
-import TypeSearch from './formComponents/TypeSearch';
-import CityOption from './formComponents/CityOption';
+import CitySubForm from './formComponents/CitySubForm';
 import AddButton from './AddButton';
 
 export default class AddTripForm extends React.Component {
@@ -17,37 +15,57 @@ export default class AddTripForm extends React.Component {
             cities: [{}]
         }
 
-        this.selectionHandler = this.selectionHandler.bind(this);
         this.addNewCity = this.addNewCity.bind(this);
         this.isAddCityDisabled = this.isAddCityDisabled.bind(this);
+        this.saveCityHandler = this.saveCityHandler.bind(this);
     }
 
-    // Calls the api to get the places to suggest.
-    searchFunction(queryString) {
-        return getPlaces(queryString);
-    }
-
-    selectionHandler(city, index) {
-        let cities = this.state.cities;
-        cities[index] = city;
-        this.setState({cities: [...cities]});
-    }
-
-    mapCities(city) {
-        return <CityOption description={city.description}/>
-    }
-
+    // Adds a new space in the cities array
     addNewCity() {
         this.setState({cities: [...this.state.cities, {}]})
     }
 
     isAddCityDisabled() {
-        let emptyCities = this.state.cities.filter((city) => isEmpty(city));
+        let emptyCities = this.getEmptyCities();
 
         return !!emptyCities.length;
     }
 
+    getSubmitedCities() {
+        return  this.state.cities.filter((city) => !isEmpty(city));
+    }
+
+    getEmptyCities() {
+        return this.state.cities.filter((city) => isEmpty(city));
+    }
+
+    saveCityHandler(cityObject) {
+        let cities = this.state.cities;
+        cities[this.state.cities.length - 1] = cityObject;
+        this.setState({cities: [...cities]});
+    }
+
+    // Returns the corresponding min date depending on the last city sub-form submitted
+    getMinDate() {
+        let lastDate = new Date();
+        const {cities} = this.state;
+        const lastCity = cities.length > 1 ? cities[cities.length - 2] : cities[0];
+
+        // We use the Date constructor despite of returning the same object structure
+        // due to the "day + 1" which could lead to an error in cases where the finishDate
+        // is the last day of a month, Date takes care of this cases.
+        if (!isEmpty(lastCity)) {
+            let {to} = lastCity.dates;
+            lastDate = new Date(to.getFullYear(), to.getMonth(), to.getDate() + 1);
+        }
+
+        return lastDate;
+    }
+
     render() {
+        const emptyCities = this.getEmptyCities(),
+              submitedCities = this.getSubmitedCities();
+
         return <KeyboardAvoidingView
             behavior="position"
             style={styles.container}
@@ -57,14 +75,14 @@ export default class AddTripForm extends React.Component {
                 <Text style={[styles.label, styles.citiesLabel]}>Cities</Text>
                 <AddButton disabled={this.isAddCityDisabled()} callback={this.addNewCity}/>
             </View>
-            {this.state.cities.map((value, index) => (
-                <TypeSearch
-                    placeholder={'Enter a city'}
-                    searchFunction={this.searchFunction}
-                    onSelection={this.selectionHandler}
-                    mapToComponent={this.mapCities}
-                    index={index}
+            {/* {submitedCities.map((city, index) => (
+                <Text>{city.description}</Text>
+            ))} */}
+            {emptyCities.map((value, index) => (
+                <CitySubForm
                     key={index}
+                    onSaveHandler={this.saveCityHandler}
+                    minDate={this.getMinDate()}
                 />
             ))}
         </KeyboardAvoidingView>
