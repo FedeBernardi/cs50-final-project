@@ -13,7 +13,8 @@ export default class CitySubForm extends React.Component {
 
     static propTypes = {
         onSaveHandler: PropTypes.func.isRequired,
-        minDate: PropTypes.object.isRequired
+        minDate: PropTypes.object.isRequired,
+        isFromCalendarDisabled: PropTypes.bool.isRequired
     }
 
     constructor(props) {
@@ -81,6 +82,7 @@ export default class CitySubForm extends React.Component {
                     dateSelectedHandler={(date) => this.dateSelectedHandler(date, 'fromDate')}
                     minDate={this.state.fromDate}
                     selectedDate={this.state.fromDate}
+                    isDisabled={this.props.isFromCalendarDisabled}
                 />
                 <DatePicker
                     dateSelectedHandler={(date) => this.dateSelectedHandler(date, 'toDate')}

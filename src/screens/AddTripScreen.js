@@ -1,13 +1,27 @@
 import React from 'react';
 import {View, Text, ScrollView, StyleSheet} from 'react-native';
+import {connect} from 'react-redux';
 import {Constants} from 'expo';
+
+import {addTrip} from '../redux/actions';
 
 import AddTripForm from '../components/AddTripForm';
 
-export default class AddTripScreen extends React.Component {
+class AddTripScreen extends React.Component {
     static navigationOptions = () => ({
         header: null
     });
+
+    handleFormSubmition = (tripName, cities) => {
+        const tripObject = {
+            id: tripName + Math.floor(Math.random() * Math.floor(100)),
+            name: tripName,
+            cities: cities
+        }
+
+        this.props.addTrip(tripObject);
+        this.props.navigation.navigate('Trip');
+    }
 
     render() {
         return <View style={styles.container}>
@@ -16,7 +30,7 @@ export default class AddTripScreen extends React.Component {
                     <Text style={styles.title}>Create a new Trip!</Text>
                 </View>
                 <View style={styles.formContainer}>
-                    <AddTripForm />
+                    <AddTripForm handleFormSubmition={this.handleFormSubmition}/>
                 </View>
             </ScrollView>
         </View>;
@@ -46,3 +60,5 @@ const styles = StyleSheet.create({
         width: '100%'
     }
 });
+
+export default connect(null, {addTrip})(AddTripScreen);

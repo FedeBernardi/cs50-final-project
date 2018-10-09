@@ -1,5 +1,6 @@
 import React from 'react';
 import {KeyboardAvoidingView, StyleSheet, Text, View, TextInput, Button} from 'react-native';
+import PropTypes from 'prop-types';
 
 import {isEmpty} from '../utils/functions';
 
@@ -8,6 +9,10 @@ import CityCard from './CityCard';
 import IconButton from './IconButton';
 
 export default class AddTripForm extends React.Component {
+
+    static propTypes = {
+        handleFormSubmition: PropTypes.func.isRequired
+    }
 
     constructor(props) {
         super(props);
@@ -22,6 +27,7 @@ export default class AddTripForm extends React.Component {
         this.saveCityHandler = this.saveCityHandler.bind(this);
         this.removeCity = this.removeCity.bind(this);
         this.onChangeName = this.onChangeName.bind(this);
+        this.handleSubmition = this.handleSubmition.bind(this);
     }
 
     // Adds a new space in the cities array
@@ -91,6 +97,11 @@ export default class AddTripForm extends React.Component {
         return isEmpty(this.state.cities[0]) || this.state.tripName.length < 4;
     }
 
+    handleSubmition() {
+        const {tripName, cities} = this.state;
+        this.props.handleFormSubmition(tripName, cities);
+    }
+
     render() {
         const emptyCities = this.getEmptyCities(),
               submitedCities = this.getSubmitedCities();
@@ -101,7 +112,11 @@ export default class AddTripForm extends React.Component {
         >
             <View style={styles.tripNameInputContainer}>
                 <Text style={styles.label}>Name of the trip</Text>
-                <TextInput style={styles.input} onChange={this.onChangeName}/>
+                <TextInput
+                    style={styles.input}
+                    onChangeText={this.onChangeName}
+                    underlineColorAndroid='transparent'
+                />
             </View>
             <View style={styles.citiesHeader}>
                 <Text style={[styles.label, styles.citiesLabel]}>Cities</Text>
@@ -133,13 +148,13 @@ export default class AddTripForm extends React.Component {
                     key={index}
                     onSaveHandler={this.saveCityHandler}
                     minDate={this.getMinDate()}
+                    isFromCalendarDisabled={this.state.cities.length > 1}
                 />
             ))}
             <Button
                 style={styles.submitButton}
                 title={'Create trip!'}
-                onPress={() => console.log('asd')}
-                underlineColorAndroid='transparent'
+                onPress={this.handleSubmition}
                 disabled={this.isFormReady()}
             />
         </KeyboardAvoidingView>

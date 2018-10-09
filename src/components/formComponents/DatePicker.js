@@ -6,9 +6,10 @@ import {Ionicons} from '@expo/vector-icons';
 export default class DatePicker extends React.Component {
     static propTypes = {
         dateSelectedHandler: PropTypes.func.isRequired,
-        dissmisedHandler: PropTypes.func,
+        dismissedHandler: PropTypes.func,
         selectedDate: PropTypes.object.isRequired,
         minDate: PropTypes.object.isRequired,
+        isDisabled: PropTypes.bool,
         label: PropTypes.string
     }
 
@@ -34,16 +35,28 @@ export default class DatePicker extends React.Component {
         }
     }
 
-    render() {
-        const {selectedDate} = this.props;
+    renderContent() {
+        const {selectedDate, label, isDisabled} = this.props;
 
-        return <TouchableOpacity onPress={this.openDatePicker} style={styles.container}>
-            {this.props.label && <Text>{this.props.label}</Text>}
+        return <View>
+            {label && <Text>{label}</Text>}
             <View style={styles.description}>
-                <Ionicons name={'ios-calendar'} size={40}/>
-                <Text style={styles.date}>{selectedDate.toLocaleDateString('en-US')}</Text>
+                <Ionicons name={'ios-calendar'} style={isDisabled ? styles.disabled : {}} size={40}/>
+                <Text style={[styles.date, isDisabled ? styles.disabled : {}]}>
+                    {selectedDate.toLocaleDateString('en-US')}
+                </Text>
             </View>
-        </TouchableOpacity>;
+        </View>
+    }
+
+    render() {
+        if (this.props.isDisabled) {
+            return this.renderContent();
+        } else {
+            return <TouchableOpacity onPress={this.openDatePicker} style={styles.container}>
+                {this.renderContent()}
+            </TouchableOpacity>;
+        }
     }
 }
 
@@ -60,5 +73,8 @@ const styles = StyleSheet.create({
     date: {
         marginLeft: 15,
         fontSize: 20
+    },
+    disabled: {
+        color: 'grey'
     }
 });

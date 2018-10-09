@@ -1,14 +1,14 @@
-import {ADD_CITY} from '../actions';
+import {SAVE_TRIP} from '../actions';
 import {mergeObjects} from '../../utils/functions';
 
 const initialState = {
-    cities: []
+    trips: []
 }
 
 export default function tripReducer(state = initialState, action) {
     switch(action.type) {
-        case ADD_CITY:
-            return mergeObjects(state, {cities: [...state.cities, action.city]});
+        case SAVE_TRIP:
+            return mergeObjects(state, {trips: [...state.trips, action.trip]});
     }
 
     return state;
