@@ -1,4 +1,4 @@
-export const ADD_CITY = 'ADD_CITY';
+export const SAVE_TRIP = 'SAVE_TRIP';
 
-export const addCity = (city) => ({type: ADD_CITY, city});
+export const addTrip = (trip) => ({type: SAVE_TRIP, trip});
 
