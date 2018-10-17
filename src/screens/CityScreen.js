@@ -13,11 +13,12 @@ class CityScreen extends React.Component {
 
     render() {
         const prevCity = this.props.prevCity,
-              nextCity = this.props.nextCity;
+              nextCity = this.props.nextCity,
+              currentCity = createCityDatesObject(this.props.selectedCity);
 
         return <View style={styles.container}>
-            <ScrollView>
-                <CityDatesCard currentCity={{dates: '10/09 - 10/09'}} prevCity={prevCity} nextCity={nextCity}/>
+            <ScrollView style={styles.scroll}>
+                <CityDatesCard currentCity={currentCity} prevCity={prevCity} nextCity={nextCity}/>
 
                 <Button title={'Airplanes'} onPress={() => this.props.navigation.navigate('Airplanes')}></Button>
                 <Button title={'Lodgin'} onPress={() => this.props.navigation.navigate('Lodgin')}></Button>
@@ -34,7 +35,12 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+        width: '100%',
+        padding: 10,
         backgroundColor: '#FFF'
+    },
+    scroll: {
+        width: '100%',
     }
 });
 
@@ -45,11 +51,13 @@ const styles = StyleSheet.create({
 function createCityDatesObject(city) {
     if (city) {
         const from = new Date(city.dates.from),
-              to = new Date(city.dates.to);
+              to = new Date(city.dates.to),
+              fromString = `${from.getMonth() + 1}/${from.getDate()}`,
+              toString = `${to.getMonth() + 1}/${to.getDate()}`;
 
         return {
             name: city.cityName,
-            dates: `${from.getMonth() + 1}/${from.getDate()} - ${to.getMonth() + 1}/${to.getDate()}`
+            dates: fromString === toString ? fromString : `${fromString} - ${toString}`
         }
     }
 }

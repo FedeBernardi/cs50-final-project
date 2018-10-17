@@ -37,20 +37,19 @@ export default class CityDatesCard extends React.Component {
 
 const styles = StyleSheet.create({
     datesContainer: {
-        justifyContent: 'center',
+        justifyContent: 'space-between',
         alignItems: 'center',
-        flexDirection: 'row',
-        width: '100%',
-        padding: 10
+        flexDirection: 'row'
     },
     container: {
-        alignItems: 'center'
+        alignItems: 'center',
+        width: '100%',
+        borderWidth: 1,
+        borderColor: 'black',
+        borderRadius: 10
     },
     title: {
         fontSize: 20
-    },
-    cityContainer: {
-        width: 100,
     },
     cityInfo: {
         justifyContent: 'center',

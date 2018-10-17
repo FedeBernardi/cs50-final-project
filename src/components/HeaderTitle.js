@@ -9,7 +9,7 @@ export default class HeaderTitle extends React.Component {
     }
 
     renderObject() {
-        return <View>
+        return <View style={styles.container}>
             <Text style={styles.titleObject}>{this.props.title.title}</Text>
             {this.props.title.subtitle && <Text style={styles.subtitle}>{this.props.title.subtitle}</Text>}
             {this.props.title.subtitle2 && <Text style={styles.subtitle2}>{this.props.title.subtitle2}</Text>}
