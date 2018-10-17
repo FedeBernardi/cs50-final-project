@@ -1,6 +1,8 @@
 import React from 'react';
-import {View, TouchableOpacity, StyleSheet} from 'react-native';
+import {View, TouchableOpacity, ScrollView, StyleSheet} from 'react-native';
 import {connect} from 'react-redux';
+
+import {selectedCityFromTrip} from '../redux/actions';
 
 import Hamburguer from '../components/Hamburguer';
 import {HeaderTitleFromState} from '../components/HeaderTitle';
@@ -26,7 +28,9 @@ class TripScreen extends React.Component {
             title: cityName,
             subtitle: this.props.trip.name
         };
-        this.props.navigation.navigate('City', {cityPosition: index, cityTitle});
+
+        this.props.selectedCityFromTrip(index);
+        this.props.navigation.navigate('City', {cityTitle});
     }
 
     renderCityCard(city, index) {
@@ -44,10 +48,11 @@ class TripScreen extends React.Component {
 
     render() {
         return <View style={styles.container}>
-            {this.props.trip && this.props.trip.cities.map(this.renderCityCard)}
+            <ScrollView>
+                {this.props.trip && this.props.trip.cities.map(this.renderCityCard)}
+            </ScrollView>
         </View>;
     }
-
 }
 
 const styles = StyleSheet.create({
@@ -67,4 +72,4 @@ const mapStateToProps = (store) => {
     }
 }
 
-export default connect(mapStateToProps, null)(TripScreen);
+export default connect(mapStateToProps, {selectedCityFromTrip})(TripScreen);
