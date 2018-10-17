@@ -1,26 +1,47 @@
 import React from 'react';
-import {Text, View, FlatList, StyleSheet} from 'react-native';
+import {Text, View, FlatList, StyleSheet, TouchableOpacity} from 'react-native';
 import {Constants} from 'expo';
+import {connect} from 'react-redux';
 
-import {trips} from '../../staticData';
+import {selectTripFromMenu, updateHeaderTitle} from '../redux/actions';
 
 import IconButton from './IconButton';
 
-const tripItem = ({item}) => (<View style={styles.tripContainer}>
-    <Text style={styles.tripTitle}>{item.title}</Text>
-    <Text style={styles.tripDates}>{`${item.startDate} - ${item.endDate}`}</Text>
+const tripItem = (trip) => (<View style={styles.tripContainer}>
+    <Text style={styles.tripTitle}>{trip.name}</Text>
+    <Text style={styles.tripDates}>{getTripRange(trip.cities)}</Text>
 </View>); 
 
-export default class SideMenu extends React.Component {
+function getTripRange(cities) {
+    const startsAt = new Date(cities[0].dates.from).toLocaleDateString('en-US'),
+          endsAt = new Date(cities[cities.length - 1].dates.to).toLocaleDateString('en-US');
+    return `${startsAt} - ${endsAt}`;
+}
+
+class SideMenu extends React.Component {
 
     constructor(props) {
         super(props);
 
         this.IconButtonCb = this.IconButtonCb.bind(this);
+        this.renderTrip = this.renderTrip.bind(this);
+        this.switchTrip = this.switchTrip.bind(this);
     }
 
     IconButtonCb() {
         this.props.navigation.navigate('AddTrip');
+    }
+
+    switchTrip(trip) {
+        this.props.selectTripFromMenu(trip.id);
+        this.props.updateHeaderTitle(trip.name);
+        this.props.navigation.toggleDrawer();
+    }
+
+    renderTrip({item}) {
+        return <TouchableOpacity onPress={() => this.switchTrip(item)}>
+            {tripItem(item)}
+        </TouchableOpacity>;
     }
 
     render() {
@@ -30,9 +51,9 @@ export default class SideMenu extends React.Component {
                 <IconButton iconName={'ios-add-circle-outline'} callback={this.IconButtonCb}/>
             </View>
             <FlatList
-                data={trips}
-                renderItem={tripItem}
-                keyExtractor={(item, index) => index + ''}
+                data={this.props.trips}
+                renderItem={this.renderTrip}
+                keyExtractor={(item, index) => index + item.id}
             />
         </View>;
     }
@@ -62,3 +83,9 @@ const styles = StyleSheet.create({
         fontSize: 10
     }
 });
+
+const mapStateToProps = (store) => ({
+    trips: store.trip.trips
+});
+
+export default connect(mapStateToProps, {selectTripFromMenu, updateHeaderTitle})(SideMenu);

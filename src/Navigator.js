@@ -10,8 +10,7 @@ import TripScreen from './screens/TripScreen';
 import AddTripScreen from './screens/AddTripScreen';
 
 import SideMenu from './components/SideMenu';
-
-import { APP_NAME } from './utils/constants';
+import HeaderTitle from './components/HeaderTitle';
 
 const StackNavigator = createStackNavigator(
     {
@@ -26,7 +25,7 @@ const StackNavigator = createStackNavigator(
     {
         headerLayoutPreset: 'center',
         navigationOptions: () => ({
-            headerTitle: APP_NAME,
+            headerTitle: <HeaderTitle />,
             headerMode: 'screen',
             headerBackTitleVisible: false,
             headerStyle: {

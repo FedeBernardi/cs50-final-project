@@ -1,9 +1,11 @@
 import React from 'react';
 import {View, Text, Button, StyleSheet} from 'react-native';
+import {connect} from 'react-redux';
 
 import Hamburguer from '../components/Hamburguer';
+import CityCard from '../components/CityCard';
 
-export default class AirplanesScreen extends React.Component {
+class AirplanesScreen extends React.Component {
     static navigationOptions = ({navigation}) => ({
         headerLeft: <Hamburguer
             title={'Menu'}
@@ -11,9 +13,17 @@ export default class AirplanesScreen extends React.Component {
         />
     });
 
+    renderCityCard(city, index) {
+        const from = new Date(city.dates.from),
+              to = new Date(city.dates.to);
+
+        return <CityCard key={index} cityName={city.cityName} fromDate={from} toDate={to}/>
+    }
+
     render() {
+
         return <View style={styles.container}>
-            <Text>Trip Screen</Text>
+            {this.props.trip && this.props.trip.cities.map(this.renderCityCard)}
             <Button title={'City'} onPress={() => this.props.navigation.navigate('City')}></Button>
         </View>;
     }
@@ -28,3 +38,13 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFF'
     }
 });
+
+const mapStateToProps = (store) => {
+    const selectedTrip = store.trip.trips.filter(trip => trip.id === store.trip.selectedTrip);
+
+    return {
+        trip: selectedTrip[0]
+    }
+}
+
+export default connect(mapStateToProps, null)(AirplanesScreen);
