@@ -16,7 +16,7 @@ export default function tripReducer(state = initialState, action) {
         case SELECTED_TRIP:
             return mergeObjects(state, {selectedTrip: action.tripId});
         case UPDATE_HEADER_TITLE:
-            return mergeObjects(state, {headerTitle: action.tripName});
+            return mergeObjects(state, {headerTitle: action.title});
     }
 
     return state;

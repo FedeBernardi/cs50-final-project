@@ -6,5 +6,5 @@ export const addTrip = (trip) => ({type: SAVE_TRIP, trip});
 
 export const selectTripFromMenu = (tripId) => ({type: SELECTED_TRIP, tripId});
 
-export const updateHeaderTitle = (tripName) => ({type: UPDATE_HEADER_TITLE, tripName});
+export const updateHeaderTitle = (title) => ({type: UPDATE_HEADER_TITLE, title});
 

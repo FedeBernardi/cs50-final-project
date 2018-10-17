@@ -1,7 +1,14 @@
 import React from 'react';
 import {View, Text, Button, StyleSheet} from 'react-native';
+import {connect} from 'react-redux';
 
-export default class AirplanesScreen extends React.Component {
+import {updateHeaderTitle} from '../redux/actions';
+import HeaderTitle from '../components/HeaderTitle';
+
+class CityScreen extends React.Component {
+    static navigationOptions = ({navigation}) => ({
+        headerTitle: <HeaderTitle title={navigation.getParam('cityTitle')}/>
+    });
 
     render() {
         return <View style={styles.container}>
@@ -23,3 +30,5 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFF'
     }
 });
+
+export default connect(null, {updateHeaderTitle})(CityScreen);
