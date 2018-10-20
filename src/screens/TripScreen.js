@@ -4,8 +4,8 @@ import {connect} from 'react-redux';
 
 import {selectedCityFromTrip} from '../redux/actions';
 
-import Hamburguer from '../components/Hamburguer';
-import {HeaderTitleFromState} from '../components/HeaderTitle';
+import Hamburguer from '../components/navigationHeader/Hamburguer';
+import {HeaderTitleFromState} from '../components/navigationHeader/HeaderTitle';
 import CityCard from '../components/CityCard';
 
 class TripScreen extends React.Component {

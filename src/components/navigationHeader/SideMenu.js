@@ -3,9 +3,9 @@ import {Text, View, FlatList, StyleSheet, TouchableOpacity} from 'react-native';
 import {Constants} from 'expo';
 import {connect} from 'react-redux';
 
-import {selectTripFromMenu, updateHeaderTitle} from '../redux/actions';
+import {selectTripFromMenu, updateHeaderTitle} from '../../redux/actions';
 
-import IconButton from './IconButton';
+import IconButton from '../IconButton';
 
 const tripItem = (trip) => (<View style={styles.tripContainer}>
     <Text style={styles.tripTitle}>{trip.name}</Text>

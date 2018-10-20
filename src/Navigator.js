@@ -9,7 +9,7 @@ import TicketsScreen from './screens/TicketsScreen';
 import TripScreen from './screens/TripScreen';
 import AddTripScreen from './screens/AddTripScreen';
 
-import SideMenu from './components/SideMenu';
+import SideMenu from './components/navigationHeader/SideMenu';
 
 const StackNavigator = createStackNavigator(
     {

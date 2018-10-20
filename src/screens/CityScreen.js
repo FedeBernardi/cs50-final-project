@@ -3,7 +3,7 @@ import {View, ScrollView, Button, StyleSheet} from 'react-native';
 import {connect} from 'react-redux';
 
 import {updateHeaderTitle} from '../redux/actions';
-import HeaderTitle from '../components/HeaderTitle';
+import HeaderTitle from '../components/navigationHeader/HeaderTitle';
 import CityDatesCard from '../components/CityDatesCard';
 import FlightCard from '../components/FlightCard';
 
