@@ -1,4 +1,10 @@
-import {SAVE_TRIP, SELECTED_TRIP, UPDATE_HEADER_TITLE, SELECTED_CITY} from '../actions';
+import {
+    SAVE_TRIP,
+    SELECTED_TRIP,
+    UPDATE_HEADER_TITLE,
+    SELECTED_CITY,
+    ADD_FLIGHT_TO_CITY
+} from '../actions';
 import {mergeObjects} from '../../utils/functions';
 
 import { APP_NAME } from '../../utils/constants';
@@ -20,7 +26,26 @@ export default function tripReducer(state = initialState, action) {
             return mergeObjects(state, {headerTitle: action.title});
         case SELECTED_CITY:
             return mergeObjects(state, {selectedCityIndex: action.cityIndex});
+        case ADD_FLIGHT_TO_CITY:
+            let {trips} = state,
+                {tripId, cityIndex, flight} = action;
+            let trip = getTrip(tripId, state);
+            let city = trip.cities[cityIndex];
+
+            city.flight = flight;
+            trip.cities[cityIndex] = city;
+            trips[getTripIndex(tripId, state)] = trip;
+
+            return mergeObjects(state, {trips: [...trips]});
     }
 
     return state;
+}
+
+function getTrip(id, state) {
+    return state.trips.find((trip) => trip.id === id);
+}
+
+function getTripIndex(id, state) {
+    return state.trips.findIndex((trip) => trip.id === id);
 }

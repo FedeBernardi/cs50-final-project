@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 import {updateHeaderTitle} from '../redux/actions';
 import HeaderTitle from '../components/HeaderTitle';
 import CityDatesCard from '../components/CityDatesCard';
+import FlightCard from '../components/FlightCard';
 
 class CityScreen extends React.Component {
     static navigationOptions = ({navigation}) => ({
@@ -12,22 +13,19 @@ class CityScreen extends React.Component {
     });
 
     render() {
-        const prevCity = this.props.prevCity,
-              nextCity = this.props.nextCity,
-              currentCity = createCityDatesObject(this.props.selectedCity);
+        const {prevCity, nextCity, selectedCity} = this.props,
+              currentCity = createCityDatesObject(selectedCity);
 
         return <View style={styles.container}>
             <ScrollView style={styles.scroll}>
                 <CityDatesCard currentCity={currentCity} prevCity={prevCity} nextCity={nextCity}/>
-
-                <Button title={'Airplanes'} onPress={() => this.props.navigation.navigate('Airplanes')}></Button>
+                {selectedCity.flight && <FlightCard flight={selectedCity.flight}/>}
                 <Button title={'Lodgin'} onPress={() => this.props.navigation.navigate('Lodgin')}></Button>
                 <Button title={'Itinerary'} onPress={() => this.props.navigation.navigate('Itinerary')}></Button>
                 <Button title={'Tickets'} onPress={() => this.props.navigation.navigate('Tickets')}></Button>
             </ScrollView>
         </View>;
     }
-
 }
 
 const styles = StyleSheet.create({
