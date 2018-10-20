@@ -27,11 +27,11 @@ class AddFlightForm extends React.Component {
     }
 
     async onSubmition() {
-        const {addFlightToCity, submitForm, selectedTrip, selectedCityIndex} = this.props;
+        const {addFlightToCity, submitForm} = this.props;
 
         const flight = await getFlight(this.state.flightNumber);
         if (flight) {
-            addFlightToCity(flight, selectedTrip, selectedCityIndex);
+            addFlightToCity(flight);
             submitForm();
         }
     }
@@ -62,13 +62,4 @@ const styles = StyleSheet.create({
     }
 });
 
-const mapStateToProps = (store) => {
-    const {selectedTrip, selectedCityIndex} = store.trip;
-    
-    return {
-        selectedTrip,
-        selectedCityIndex
-    }
-}
-
-export default connect(mapStateToProps, {addFlightToCity})(AddFlightForm);
+export default connect(null, {addFlightToCity})(AddFlightForm);

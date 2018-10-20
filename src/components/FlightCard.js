@@ -1,9 +1,10 @@
 import React from 'react';
-import {View, Text, TouchableOpacity, Modal, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 import PropTypes from 'prop-types';
 import {Ionicons} from '@expo/vector-icons';
 
 import FlightCardAirportInfo from './FlightCardAirportInfo';
+import DeleteFlightButton from './DeleteFlightButton';
 
 export default class FlightCard extends React.Component {
     static propTypes = {
@@ -13,40 +14,38 @@ export default class FlightCard extends React.Component {
     render() {
         const {flight} = this.props;
 
-        return <View>
-            <TouchableOpacity
-                style={styles.container}
-                onPress={() => this.setState({isModalOpen: true})}
-            >
-                <View style={styles.header}>
+        return <View style={styles.container}>
+            <View style={styles.header}>
+                <View style={styles.headerInfo}>
                     <Text style={[styles.status, styles.headerText]}>{flight.status}</Text>
                     <Text style={styles.headerText}>{flight.airline}</Text>
                     <Text style={styles.headerText}>{flight.number}</Text>
                 </View>
-                <View>
-                    <View style={styles.aitasSection}>
-                        <Text style={styles.aitaCode}>{flight.departure.cityIataCode}</Text>
-                        <Ionicons name={'ios-airplane'} color={'#34A853'} size={45}/>
-                        <Text style={styles.aitaCode}>{flight.arrival.cityIataCode}</Text>
-                    </View>
-                    <View style={styles.airportsInfoContainer}>
-                        <FlightCardAirportInfo
-                            city={flight.departure.city}
-                            date={flight.departure.date}
-                            scheduledTime={flight.departure.time}
-                            terminal={flight.departure.terminal}
-                            gate={flight.departure.gate}
-                        />
-                        <FlightCardAirportInfo
-                            city={flight.arrival.city}
-                            date={flight.arrival.date}
-                            scheduledTime={flight.arrival.time}
-                            terminal={flight.arrival.terminal}
-                            gate={flight.arrival.gate}
-                        />
-                    </View>
+                <DeleteFlightButton />
+            </View>
+            <View>
+                <View style={styles.aitasSection}>
+                    <Text style={styles.aitaCode}>{flight.departure.cityIataCode}</Text>
+                    <Ionicons name={'ios-airplane'} color={'#34A853'} size={45}/>
+                    <Text style={styles.aitaCode}>{flight.arrival.cityIataCode}</Text>
                 </View>
-            </TouchableOpacity>
+                <View style={styles.airportsInfoContainer}>
+                    <FlightCardAirportInfo
+                        city={flight.departure.city}
+                        date={flight.departure.date}
+                        scheduledTime={flight.departure.time}
+                        terminal={flight.departure.terminal}
+                        gate={flight.departure.gate}
+                    />
+                    <FlightCardAirportInfo
+                        city={flight.arrival.city}
+                        date={flight.arrival.date}
+                        scheduledTime={flight.arrival.time}
+                        terminal={flight.arrival.terminal}
+                        gate={flight.arrival.gate}
+                    />
+                </View>
+            </View>
         </View>;
     }
 
@@ -63,9 +62,13 @@ const styles = StyleSheet.create({
     },
     header: {
         flexDirection: 'row',
-        justifyContent: 'flex-start',
+        justifyContent: 'space-between',
         alignItems: 'center',
         marginBottom: 20
+    },
+    headerInfo: {
+        flexDirection: 'row',
+        alignItems: 'center',
     },
     headerText: {
         fontSize: 15,
