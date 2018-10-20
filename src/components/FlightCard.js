@@ -3,26 +3,11 @@ import {View, Text, TouchableOpacity, Modal, StyleSheet} from 'react-native';
 import PropTypes from 'prop-types';
 import {Ionicons} from '@expo/vector-icons';
 
-import AddFlightForm from './AddFlightForm';
 import FlightCardAirportInfo from './FlightCardAirportInfo';
 
 export default class FlightCard extends React.Component {
     static propTypes = {
         flight: PropTypes.object.isRequired
-    }
-
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            isModalOpen: false
-        }
-
-        this.closeModal = this.closeModal.bind(this);
-    }
-
-    closeModal() {
-        this.setState({isModalOpen: false});
     }
 
     render() {
@@ -62,16 +47,6 @@ export default class FlightCard extends React.Component {
                     </View>
                 </View>
             </TouchableOpacity>
-            <Modal
-                transparent={true}
-                visible={this.state.isModalOpen}
-                onRequestClose={() => this.setState({isModalOpen: false})}
-                animationType={'fade'}
-            >
-                <View style={styles.modalContainer}>
-                    <AddFlightForm submitForm={this.closeModal}/>
-                </View>
-            </Modal>
         </View>;
     }
 
@@ -85,12 +60,6 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: 'black',
         borderRadius: 10
-    },
-    modalContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        padding: 30,
-        backgroundColor: 'rgba(0,0,0,0.7)',
     },
     header: {
         flexDirection: 'row',
