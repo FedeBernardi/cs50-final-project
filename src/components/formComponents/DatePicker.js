@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     date: {
-        marginLeft: 15,
+        marginLeft: 5,
         fontSize: 20
     },
     disabled: {

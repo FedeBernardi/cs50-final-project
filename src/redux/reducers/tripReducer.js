@@ -4,7 +4,8 @@ import {
     UPDATE_HEADER_TITLE,
     SELECTED_CITY,
     ADD_FLIGHT_TO_CITY,
-    DELETE_FLIGHT
+    DELETE_FLIGHT,
+    ADD_LODGIN_INFO_TO_CITY
 } from '../actions';
 import {mergeObjects} from '../../utils/functions';
 
@@ -28,22 +29,32 @@ export default function tripReducer(state = initialState, action) {
         case SELECTED_CITY:
             return mergeObjects(state, {selectedCityIndex: action.cityIndex});
         case ADD_FLIGHT_TO_CITY:
-            return modifyFlight(state, action);
+            return modifyCity(state, action, modifyFlight);
         case DELETE_FLIGHT:
-            return modifyFlight(state, action);
+            return modifyCity(state, action, modifyFlight);
+        case ADD_LODGIN_INFO_TO_CITY:
+            return modifyCity(state, action, addLodginInfoToCity);
     }
 
     return state;
 }
 
-function modifyFlight(state, action) {
-    let {trips, selectedTrip, selectedCityIndex} = state,
-        {flight} = action;
+/**
+ * It gets the city that the user is editing or adding info to.
+ * Once it gets it, executes the callback which is responsible to modify the fields
+ * inside the city object. It gets back the modified city and replaces it in the trip object.
+ *
+ * @param {Object} state
+ * @param {Object} action
+ * @param {Function} callback
+ */
+function modifyCity(state, action, callback) {
+    let {trips, selectedTrip, selectedCityIndex} = state;
     let trip = getTrip(selectedTrip, state);
     let city = trip.cities[selectedCityIndex];
 
-    city.flight = flight;
-    trip.cities[selectedCityIndex] = city;
+    modifiedCity = callback(city, action);
+    trip.cities[selectedCityIndex] = modifiedCity;
     trips[getTripIndex(selectedTrip, state)] = trip;
 
     return mergeObjects(state, {trips: [...trips]});
@@ -55,4 +66,15 @@ function getTrip(id, state) {
 
 function getTripIndex(id, state) {
     return state.trips.findIndex((trip) => trip.id === id);
+}
+
+function modifyFlight(city, action) {
+    city.flight = action.flight;
+    return city;
+}
+
+function addLodginInfoToCity(city, action) {
+    const {lodginInfo} = action;
+    city.lodginInfo = city.lodginInfo ? city.lodginInfo.push(lodginInfo) : [lodginInfo];
+    return city;
 }

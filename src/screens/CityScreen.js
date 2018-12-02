@@ -8,6 +8,12 @@ import HeaderTitle from '../components/navigation/HeaderTitle';
 import CityDatesCard from '../components/CityDatesCard';
 import FlightCard from '../components/FlightCard';
 import AddFlightForm from '../components/AddFlightForm';
+import AddLodginForm from '../components/AddLodginForm';
+
+const MODAL_TYPES = {
+    FLIGHT: 'FLIGHT',
+    LODGIN: 'LODGIN'
+}
 
 class CityScreen extends React.Component {
     static navigationOptions = ({navigation}) => ({
@@ -21,11 +27,13 @@ class CityScreen extends React.Component {
             showModal: false,
             modalOptions: {
                 transparent: true,
-                animationType: 'fade'
+                animationType: 'fade',
+                modalType: null
             }
         }
 
         this.addFlightCallback = this.addFlightCallback.bind(this);
+        this.addLodginCallback = this.addLodginCallback.bind(this);
         this.closeModal = this.closeModal.bind(this);
 
         this.actionButtonsConfig = [
@@ -53,13 +61,21 @@ class CityScreen extends React.Component {
             showModal: true,
             modalOptions: {
                 transparent: true,
-                animationType: 'fade'
+                animationType: 'fade',
+                modalType: MODAL_TYPES.FLIGHT
             }
         });
     }
 
     addLodginCallback() {
-        console.log('add lodgin');
+        this.setState({
+            showModal: true,
+            modalOptions: {
+                transparent: false,
+                animationType: 'slide',
+                modalType: MODAL_TYPES.LODGIN
+            }
+        });
     }
 
     render() {
@@ -71,7 +87,6 @@ class CityScreen extends React.Component {
             <ScrollView style={styles.scroll}>
                 <CityDatesCard currentCity={currentCity} prevCity={prevCity} nextCity={nextCity}/>
                 {selectedCity.flight && <FlightCard flight={selectedCity.flight}/>}
-                <Button title={'Lodgin'} onPress={() => this.props.navigation.navigate('Lodgin')}></Button>
                 <Button title={'Itinerary'} onPress={() => this.props.navigation.navigate('Itinerary')}></Button>
                 <Button title={'Tickets'} onPress={() => this.props.navigation.navigate('Tickets')}></Button>
             </ScrollView>
@@ -81,8 +96,21 @@ class CityScreen extends React.Component {
                 onRequestClose={() => this.closeModal()}
                 animationType={modalOptions.animationType}
             >
-                <View style={styles.modalContainer}>
-                    <AddFlightForm submitForm={this.closeModal}/>
+                <View style={[
+                        styles.modalContainer,
+                        modalOptions.transparent === true ?
+                            styles.modalTransparentBackground :
+                            styles.modalFullBackground
+                    ]}
+                >
+                    {
+                        modalOptions.modalType === MODAL_TYPES.FLIGHT &&
+                        <AddFlightForm submitForm={this.closeModal}/>
+                    }
+                    {
+                        modalOptions.modalType === MODAL_TYPES.LODGIN &&
+                        <ScrollView><AddLodginForm submitForm={this.closeModal}/></ScrollView>
+                    }
                 </View>
             </Modal>
             <ActionButtons buttons={this.actionButtonsConfig}/>
@@ -100,10 +128,15 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFF'
     },
     modalContainer: {
-        flex: 1,
+        flex: 1
+    },
+    modalTransparentBackground: {
         justifyContent: 'center',
-        padding: 30,
         backgroundColor: 'rgba(0,0,0,0.7)',
+        padding: 30
+    },
+    modalFullBackground: {
+        backgroundColor: '#FFF'
     },
     scroll: {
         width: '100%',

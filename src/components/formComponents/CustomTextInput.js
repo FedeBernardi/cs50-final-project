@@ -13,7 +13,7 @@ export default class CustomTextInput extends React.Component {
     render() {
         return <TextInput
             style={styles.input}
-            onChangeText={this.onChangeName}
+            onChangeText={this.props.onChangeText}
             placeholder={this.props.placeholder}
             keyboardType={this.props.keyboardType ? this.props.keyboardType : 'default'}
             underlineColorAndroid='transparent'
