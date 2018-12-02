@@ -54,13 +54,20 @@ export default class TypeSearch extends React.Component {
     render() {
         const {placeholder, label, mapToComponent} = this.props;
         const {resultsFromSearch, selectedOption} = this.state;
+        let selectedValue = null;
+
+        if (!isEmpty(selectedOption)) {
+            selectedValue = typeof selectedOption === 'string' ?
+                selectedOption :
+                selectedOption.description;
+        }
 
         return <View style={styles.container}>
             {label && <Text style={styles.label}>{label}</Text>}
             <TextInput
                 ref='input'
                 style={styles.input}
-                value={isEmpty(selectedOption) ? null : selectedOption.description}
+                value={selectedValue}
                 onFocus={this.onFocusHandler}
                 onBlur={this.onBlurHandler}
                 placeholder={placeholder}

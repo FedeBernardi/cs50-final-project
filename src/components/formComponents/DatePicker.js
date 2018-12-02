@@ -6,9 +6,10 @@ import {Ionicons} from '@expo/vector-icons';
 export default class DatePicker extends React.Component {
     static propTypes = {
         dateSelectedHandler: PropTypes.func.isRequired,
-        dismissedHandler: PropTypes.func,
         selectedDate: PropTypes.object.isRequired,
         minDate: PropTypes.object.isRequired,
+        dismissedHandler: PropTypes.func,
+        maxDate: PropTypes.object,
         isDisabled: PropTypes.bool,
         label: PropTypes.string
     }
@@ -20,12 +21,13 @@ export default class DatePicker extends React.Component {
     }
 
     async openDatePicker() {
-        const {minDate, selectedDate} = this.props;
+        const {minDate, selectedDate, maxDate} = this.props;
 
         try {
             const {action, year, month, day} = await DatePickerAndroid.open({
                 date: selectedDate,
-                minDate: minDate
+                minDate: minDate,
+                maxDate: maxDate
             });
             if (action !== DatePickerAndroid.dismissedAction) {
                 this.props.dateSelectedHandler(new Date(year, month, day));
