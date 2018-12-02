@@ -15,3 +15,14 @@ export async function getPlaces(input) {
 function processPlaces(data) {
     return data.predictions.map((city) => ({description: city.description, id: city.place_id}));
 }
+
+export async function getAddresses(input, city) {
+    const response = await fetch(`${BASE_URL}/maps/api/place/autocomplete/json?input=${city}, ${input}&types=address&language=en_US&key=${API_KEY}`);
+    const data = await response.json();
+
+    return processAddresses(data);
+}
+
+function processAddresses(data) {
+    return data.predictions.map((address) => address.description);
+}
