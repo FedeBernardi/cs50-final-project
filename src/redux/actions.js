@@ -4,7 +4,7 @@ export const UPDATE_HEADER_TITLE = 'UPDATE_HEADER_TITLE';
 export const SELECTED_CITY = 'SELECTED_CITY';
 export const ADD_FLIGHT_TO_CITY = 'ADD_FLIGHT_TO_CITY';
 export const DELETE_FLIGHT = 'DELETE_FLIGHT';
-export const ADD_LODGIN_INFO_TO_CITY = 'ADD_LODGIN_INFO_TO_CITY';
+export const ADD_LODGING_INFO_TO_CITY = 'ADD_LODGING_INFO_TO_CITY';
 
 export const addTrip = (trip) => ({type: SAVE_TRIP, trip});
 
@@ -18,4 +18,4 @@ export const addFlightToCity = (flight) => ({type: ADD_FLIGHT_TO_CITY, flight});
 
 export const deleteFlightFromCity = () => ({type: DELETE_FLIGHT});
 
-export const addLodginInfoToCity = (lodginInfo) => ({type: ADD_LODGIN_INFO_TO_CITY, lodginInfo});
+export const addLodgingInfoToCity = (lodgingInfo) => ({type: ADD_LODGING_INFO_TO_CITY, lodgingInfo});

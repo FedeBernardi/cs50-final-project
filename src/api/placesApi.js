@@ -1,6 +1,7 @@
 import {mockedCities} from '../../staticData';
 
 const BASE_URL = 'https://maps.googleapis.com';
+const API_KEY = 'AIzaSyCnPWqCdynhAx4K21WPGNJ85IdbYRnAQcs';
 
 export async function getPlaces(input) {
     return mockedCities;

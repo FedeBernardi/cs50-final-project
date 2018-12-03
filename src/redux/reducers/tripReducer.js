@@ -5,7 +5,7 @@ import {
     SELECTED_CITY,
     ADD_FLIGHT_TO_CITY,
     DELETE_FLIGHT,
-    ADD_LODGIN_INFO_TO_CITY
+    ADD_LODGING_INFO_TO_CITY
 } from '../actions';
 import {mergeObjects} from '../../utils/functions';
 
@@ -32,8 +32,8 @@ export default function tripReducer(state = initialState, action) {
             return modifyCity(state, action, modifyFlight);
         case DELETE_FLIGHT:
             return modifyCity(state, action, modifyFlight);
-        case ADD_LODGIN_INFO_TO_CITY:
-            return modifyCity(state, action, addLodginInfoToCity);
+        case ADD_LODGING_INFO_TO_CITY:
+            return modifyCity(state, action, addLodgingInfoToCity);
     }
 
     return state;
@@ -73,13 +73,13 @@ function modifyFlight(city, action) {
     return city;
 }
 
-function addLodginInfoToCity(city, action) {
-    const {lodginInfo} = action;
+function addLodgingInfoToCity(city, action) {
+    const {lodgingInfo} = action;
 
-    if (city.lodginInfo) {
-        city.lodginInfo.push(lodginInfo);
+    if (city.lodgingInfo) {
+        city.lodgingInfo.push(lodgingInfo);
     } else {
-        city.lodginInfo = [lodginInfo];
+        city.lodgingInfo = [lodgingInfo];
     }
 
     return city;

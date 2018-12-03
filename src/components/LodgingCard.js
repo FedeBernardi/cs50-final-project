@@ -3,7 +3,7 @@ import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 
 import FooterMessage from './FooterMessage';
 
-export default class LodginCard extends React.Component {
+export default class LodgingCard extends React.Component {
     
     getDateString(date) {
         const dateObj = new Date(date);
@@ -12,15 +12,15 @@ export default class LodginCard extends React.Component {
     }
 
     render() {
-        let {lodginInfo} = this.props;
+        let {lodgingInfo} = this.props;
 
         return <TouchableOpacity style={styles.container}>
             <Text style={styles.title}>{'You\'re staying at'}</Text>
             {
-                lodginInfo.map((lodgin, index) => <View key={index} style={styles.infoContainer}>
-                    <Text style={[styles.textInfo, styles.lodginName]}>{lodgin.name}</Text>
-                    <Text style={styles.textInfo}>{lodgin.address}</Text>
-                    <Text style={styles.textInfo}>{`From: ${this.getDateString(lodgin.dateFrom)} To: ${this.getDateString(lodginInfo.dateTo)}`}</Text>
+                lodgingInfo.map((lodging, index) => <View key={index} style={styles.infoContainer}>
+                    <Text style={[styles.textInfo, styles.lodgingName]}>{lodging.name}</Text>
+                    <Text style={styles.textInfo}>{lodging.address}</Text>
+                    <Text style={styles.textInfo}>{`From: ${this.getDateString(lodging.dateFrom)} To: ${this.getDateString(lodgingInfo.dateTo)}`}</Text>
                 </View>)
             }
             <FooterMessage message={'Tap to see the details'}/>
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: 'bold'
     },
-    lodginName: {
+    lodgingName: {
         fontWeight: 'bold'
     },
     textInfo: {

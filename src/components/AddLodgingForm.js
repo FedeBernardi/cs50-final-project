@@ -4,14 +4,14 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 
 import {getAddresses} from '../api/placesApi';
-import {addLodginInfoToCity} from '../redux/actions';
+import {addLodgingInfoToCity} from '../redux/actions';
 
 import TypeSearch from './formComponents/TypeSearch';
 import RadioButtonsGroup from './formComponents/RadioButtonsGroup';
 import CustomTextInput from './formComponents/CustomTextInput';
 import DatePicker from './formComponents/DatePicker';
 
-class AddLodginForm extends React.Component {
+class AddLodgingForm extends React.Component {
 
     static propTypes = {
         submitForm: PropTypes.func.isRequired
@@ -83,7 +83,7 @@ class AddLodginForm extends React.Component {
     }
 
     handleSubmition() {
-        this.props.addLodginInfoToCity(this.state);
+        this.props.addLodgingInfoToCity(this.state);
         this.props.submitForm();
     }
 
@@ -144,7 +144,7 @@ class AddLodginForm extends React.Component {
                 />
             </View>
             <Button
-                title={'Add Lodgin Info!'}
+                title={'Add Lodging Info!'}
                 onPress={this.handleSubmition}
                 disabled={this.isFormReady()}
             />
@@ -196,4 +196,4 @@ const mapStateToProps = (store) => {
     };
 }
 
-export default connect(mapStateToProps, {addLodginInfoToCity})(AddLodginForm);
+export default connect(mapStateToProps, {addLodgingInfoToCity})(AddLodgingForm);
