@@ -9,6 +9,7 @@ import CityDatesCard from '../components/CityDatesCard';
 import FlightCard from '../components/FlightCard';
 import AddFlightForm from '../components/AddFlightForm';
 import AddLodginForm from '../components/AddLodginForm';
+import LodginCard from '../components/LodginCard';
 
 const MODAL_TYPES = {
     FLIGHT: 'FLIGHT',
@@ -87,6 +88,7 @@ class CityScreen extends React.Component {
             <ScrollView style={styles.scroll}>
                 <CityDatesCard currentCity={currentCity} prevCity={prevCity} nextCity={nextCity}/>
                 {selectedCity.flight && <FlightCard flight={selectedCity.flight}/>}
+                {selectedCity.lodginInfo && <LodginCard lodginInfo={selectedCity.lodginInfo}/>}
                 <Button title={'Itinerary'} onPress={() => this.props.navigation.navigate('Itinerary')}></Button>
                 <Button title={'Tickets'} onPress={() => this.props.navigation.navigate('Tickets')}></Button>
             </ScrollView>

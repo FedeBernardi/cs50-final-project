@@ -75,6 +75,12 @@ function modifyFlight(city, action) {
 
 function addLodginInfoToCity(city, action) {
     const {lodginInfo} = action;
-    city.lodginInfo = city.lodginInfo ? city.lodginInfo.push(lodginInfo) : [lodginInfo];
+
+    if (city.lodginInfo) {
+        city.lodginInfo.push(lodginInfo);
+    } else {
+        city.lodginInfo = [lodginInfo];
+    }
+
     return city;
 }
