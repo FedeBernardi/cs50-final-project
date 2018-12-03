@@ -3,20 +3,20 @@ import {createStackNavigator, createDrawerNavigator} from 'react-navigation';
 
 import CityScreen from './screens/CityScreen';
 import ItineraryScreen from './screens/ItineraryScreen';
-import LodginScreen from './screens/LodginScreen';
+import LodgingScreen from './screens/LodgingScreen';
 import AirplanesScreen from './screens/AirplanesScreen';
 import TicketsScreen from './screens/TicketsScreen';
 import TripScreen from './screens/TripScreen';
 import AddTripScreen from './screens/AddTripScreen';
 
-import SideMenu from './components/SideMenu';
+import SideMenu from './components/navigation/SideMenu';
 
 const StackNavigator = createStackNavigator(
     {
         Trip: TripScreen,
         City: CityScreen,
         Airplanes: AirplanesScreen,
-        Lodgin: LodginScreen,
+        Lodging: LodgingScreen,
         Itinerary: ItineraryScreen,
         Tickets: TicketsScreen,
         AddTrip: AddTripScreen

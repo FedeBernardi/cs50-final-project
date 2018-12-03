@@ -1,11 +1,11 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 
-export default class LodginScreen extends React.Component {
+export default class LodgingScreen extends React.Component {
 
     render() {
         return <View style={styles.container}>
-            <Text>Lodgin Screen</Text>
+            <Text>Lodging Screen</Text>
         </View>;
     }
 

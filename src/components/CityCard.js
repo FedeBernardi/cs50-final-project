@@ -18,11 +18,11 @@ export default class CityCard extends React.Component {
             </View>
             <View style={styles.datesContainer}>
                 <View style={styles.dateContainer}>
-                    <Ionicons name={'ios-airplane'} size={30}/>
+                    <Ionicons name={'ios-calendar'} size={30}/>
                     <Text style={styles.date}>{`From: ${this.props.fromDate.toLocaleDateString('en-US')}`}</Text>
                 </View>
                 <View style={styles.dateContainer}>
-                    <Ionicons name={'ios-airplane'} size={30}/>
+                    <Ionicons name={'ios-calendar'} size={30}/>
                     <Text style={styles.date}>{`To: ${this.props.toDate.toLocaleDateString('en-US')}`}</Text>
                 </View>
             </View>

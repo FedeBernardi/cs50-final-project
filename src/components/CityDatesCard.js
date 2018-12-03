@@ -1,5 +1,6 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
+import {Ionicons} from '@expo/vector-icons';
 import PropTypes from 'prop-types';
 
 export default class CityDatesCard extends React.Component {
@@ -14,6 +15,7 @@ export default class CityDatesCard extends React.Component {
 
         return <View style={styles.container}>
             <Text style={styles.title}>{'Dates'}</Text>
+            <Ionicons name={'ios-calendar'} size={30}/>
             <View style={styles.datesContainer}>
                 <View style={styles.cityContainer}>
                     {prevCity && <View style={styles.cityInfo}>

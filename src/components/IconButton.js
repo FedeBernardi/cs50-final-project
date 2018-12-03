@@ -7,6 +7,7 @@ export default class IconButton extends React.Component {
     static propTypes = {
         iconName: PropTypes.string.isRequired,
         callback: PropTypes.func.isRequired,
+        size: PropTypes.number,
         text: PropTypes.string,
         disabled: PropTypes.bool,
     }
@@ -35,7 +36,7 @@ export default class IconButton extends React.Component {
                 {this.props.text && <Text>{this.props.text}</Text>}
                 <Ionicons
                     name={this.props.iconName}
-                    size={40}
+                    size={this.props.size ? this.props.size : 40}
                     style={this.isButtonDisabled() ? {color: 'grey'} : {}}
                 />
             </View>

@@ -99,6 +99,12 @@ export default class AddTripForm extends React.Component {
 
     handleSubmition() {
         const {tripName, cities} = this.state;
+
+        // We check if the cities array doesn't have an empty space at the end
+        if (isEmpty(cities[cities.length -1])) {
+            cities.pop();
+        }
+
         this.props.handleFormSubmition(tripName, cities);
     }
 
