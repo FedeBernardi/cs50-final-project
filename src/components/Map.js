@@ -5,13 +5,14 @@ import {Permissions} from 'expo';
 import PropTypes from 'prop-types';
 
 export default class Map extends React.Component{ 
-    static geoRequestAvailable = true;
     
     static propTypes = {
         address: PropTypes.string.isRequired,
         style: PropTypes.number.isRequired
     }
     
+    static geoRequestAvailable = true;
+
     state = {
         addressMarker: null
     }

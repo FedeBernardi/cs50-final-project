@@ -7,6 +7,7 @@ import {getDateString} from '../utils/functions';
 
 import HeaderTitle from '../components/navigation/HeaderTitle';
 import Map from '../components/Map';
+import Link from '../components/Link';
 
 export default class LodgingScreen extends React.Component {
 
@@ -54,17 +55,21 @@ export default class LodgingScreen extends React.Component {
                         </View>
                         {
                             !!lodging.phoneNumber &&
-                            <View style={styles.contactInfoRow}>
-                                <Icon name={'phone'} size={20}/>
-                                <Text style={styles.contactInfoText}>{lodging.phoneNumber}</Text>
-                            </View>
+                            <Link url={`tel:${lodging.phoneNumber}`}>
+                                <View style={styles.contactInfoRow}>
+                                    <Icon name={'phone'} size={20}/>
+                                    <Text style={styles.contactInfoText}>{lodging.phoneNumber}</Text>
+                                </View>
+                            </Link>
                         }
                         {
                             !!lodging.email &&
-                            <View style={styles.contactInfoRow}>
-                                <Ionicons name={'ios-mail'} size={20}/>
-                                <Text style={styles.contactInfoText}>{lodging.email}</Text>
-                            </View>
+                            <Link url={`mailto:${lodging.email}`}>
+                                <View style={styles.contactInfoRow}>
+                                    <Ionicons name={'ios-mail'} size={20}/>
+                                    <Text style={styles.contactInfoText}>{lodging.email}</Text>
+                                </View>
+                            </Link>
                         }
                         <Text style={styles.address}>{lodging.address}</Text>
                     </View>
