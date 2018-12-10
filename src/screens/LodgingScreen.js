@@ -71,7 +71,10 @@ export default class LodgingScreen extends React.Component {
                                 </View>
                             </Link>
                         }
-                        <Text style={styles.address}>{lodging.address}</Text>
+                        <View style={styles.addressRow}>
+                            <Icon name={'map-marker'} size={20}/>
+                            <Text style={styles.contactInfoText}>{lodging.address}</Text>
+                        </View>
                     </View>
                     <Map style={styles.map} address={lodging.address}/>
                 </View>
@@ -95,7 +98,8 @@ const styles = StyleSheet.create({
     contactInfoText: {
         marginLeft: 10
     },
-    address: {
+    addressRow: {
+        flexDirection: 'row',
         marginTop: 10
     },
     header: {
