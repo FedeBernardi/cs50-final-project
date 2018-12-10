@@ -36,6 +36,7 @@ class CityScreen extends React.Component {
         this.addFlightCallback = this.addFlightCallback.bind(this);
         this.addLodgingCallback = this.addLodgingCallback.bind(this);
         this.closeModal = this.closeModal.bind(this);
+        this.onTapLodgingCard = this.onTapLodgingCard.bind(this);
 
         this.actionButtonsConfig = [
             {
@@ -79,6 +80,16 @@ class CityScreen extends React.Component {
         });
     }
 
+    onTapLodgingCard() {
+        this.props.navigation.navigate(
+            'Lodging',
+            {
+                lodgingInfo: this.props.selectedCity.lodgingInfo,
+                cityTitle: this.props.selectedCity.cityName
+            }
+        );
+    }
+
     render() {
         const {prevCity, nextCity, selectedCity} = this.props,
               currentCity = createCityDatesObject(selectedCity),
@@ -88,7 +99,10 @@ class CityScreen extends React.Component {
             <ScrollView style={styles.scroll}>
                 <CityDatesCard currentCity={currentCity} prevCity={prevCity} nextCity={nextCity}/>
                 {selectedCity.flight && <FlightCard flight={selectedCity.flight}/>}
-                {selectedCity.lodgingInfo && <LodgingCard lodgingInfo={selectedCity.lodgingInfo}/>}
+                {selectedCity.lodgingInfo && <LodgingCard
+                    lodgingInfo={selectedCity.lodgingInfo}
+                    handlingTap={this.onTapLodgingCard}
+                />}
                 <Button title={'Itinerary'} onPress={() => this.props.navigation.navigate('Itinerary')}></Button>
                 <Button title={'Tickets'} onPress={() => this.props.navigation.navigate('Tickets')}></Button>
             </ScrollView>
