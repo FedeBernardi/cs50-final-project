@@ -8,7 +8,7 @@ import HeaderTitle from '../components/navigation/HeaderTitle';
 import CityDatesCard from '../components/CityDatesCard';
 import FlightCard from '../components/FlightCard';
 import AddFlightForm from '../components/AddFlightForm';
-import AddLodgingForm from '../components/AddLodgingForm';
+import LodgingForm from '../components/LodgingForm';
 import LodgingCard from '../components/LodgingCard';
 
 const MODAL_TYPES = {
@@ -125,7 +125,7 @@ class CityScreen extends React.Component {
                     }
                     {
                         modalOptions.modalType === MODAL_TYPES.LODGING &&
-                        <ScrollView><AddLodgingForm submitForm={this.closeModal}/></ScrollView>
+                        <ScrollView><LodgingForm submitForm={this.closeModal}/></ScrollView>
                     }
                 </View>
             </Modal>

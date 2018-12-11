@@ -7,6 +7,7 @@ export default class RadioButtonsGroup extends React.Component {
     static propTypes = {
         options: PropTypes.array.isRequired,
         onSelection: PropTypes.func.isRequired,
+        defaultOption: PropTypes.number,
         isVertical: PropTypes.bool
     }
 
@@ -14,7 +15,7 @@ export default class RadioButtonsGroup extends React.Component {
         super(props);
 
         this.state = {
-            selectedOption: -1
+            selectedOption: props.defaultOption !== null ? props.defaultOption : -1
         }
         
         this.onSelection = this.onSelection.bind(this);

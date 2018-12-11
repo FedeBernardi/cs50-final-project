@@ -5,6 +5,8 @@ export const SELECTED_CITY = 'SELECTED_CITY';
 export const ADD_FLIGHT_TO_CITY = 'ADD_FLIGHT_TO_CITY';
 export const DELETE_FLIGHT = 'DELETE_FLIGHT';
 export const ADD_LODGING_INFO_TO_CITY = 'ADD_LODGING_INFO_TO_CITY';
+export const EDIT_LODGING_INFO = 'EDIT_LODGING_INFO';
+export const DELETE_LODGING = 'DELETE_LODGING';
 
 export const addTrip = (trip) => ({type: SAVE_TRIP, trip});
 
@@ -19,3 +21,7 @@ export const addFlightToCity = (flight) => ({type: ADD_FLIGHT_TO_CITY, flight});
 export const deleteFlightFromCity = () => ({type: DELETE_FLIGHT});
 
 export const addLodgingInfoToCity = (lodgingInfo) => ({type: ADD_LODGING_INFO_TO_CITY, lodgingInfo});
+
+export const editLodgingInfo = (lodgingInfo, lodgingIndex) => ({type: EDIT_LODGING_INFO, lodgingInfo, lodgingIndex});
+
+export const deleteLodgingInfo = (lodgingIndex) => ({type: DELETE_LODGING, lodgingIndex});

@@ -9,6 +9,7 @@ export default class TypeSearch extends React.Component {
     static propTypes = {
         label: PropTypes.string,
         placeholder: PropTypes.string,
+        value: PropTypes.string,
         searchFunction: PropTypes.func.isRequired,
         mapToComponent: PropTypes.func.isRequired,
         onSelection: PropTypes.func.isRequired
@@ -19,7 +20,7 @@ export default class TypeSearch extends React.Component {
 
         this.state = {
             resultsFromSearch: [],
-            selectedOption: {}
+            selectedOption: props.value ? props.value : {}
         };
         this.handleOnChange = this.handleOnChange.bind(this);
         this.handleSelection = this.handleSelection.bind(this);
