@@ -10,7 +10,7 @@ import TypeSearch from './formComponents/TypeSearch';
 import RadioButtonsGroup from './formComponents/RadioButtonsGroup';
 import CustomTextInput from './formComponents/CustomTextInput';
 import DatePicker from './formComponents/DatePicker';
-import IconButton from './IconButton';
+import DeleteButton from '../components/DeleteButton';
 
 class AddLodgingForm extends React.Component {
 
@@ -113,7 +113,7 @@ class AddLodgingForm extends React.Component {
             {
                 isEditing && <View style={styles.editHeader}>
                     <Text style={styles.title}>{`Edit ${this.props.lodgingToEdit.name}`}</Text>
-                    <IconButton iconName={'md-trash'} size={40} callback={this.deleteLodging}/>
+                    <DeleteButton callback={this.deleteLodging} />
                 </View>
             }
             <Text style={styles.label}>{'Name of the place*'}</Text>
