@@ -45,10 +45,10 @@ export default class ConfirmationModal extends React.Component {
                     </View>
                     <View style={styles.buttonsContainer}>
                         <View style={styles.leftButton}>
-                            <Button title={'Confirm'} onPress={this.onConfirmationHandler}/>
+                            <Button title={'Cancel'} onPress={this.onCancelationHandler}/>
                         </View>
                         <View>
-                            <Button title={'Cancel'} onPress={this.onCancelationHandler}/>
+                            <Button title={'Confirm'} onPress={this.onConfirmationHandler}/>
                         </View>
                     </View>
                 </View>

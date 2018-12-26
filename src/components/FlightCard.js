@@ -1,14 +1,27 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
 import {Ionicons} from '@expo/vector-icons';
 
-import FlightCardAirportInfo from './FlightCardAirportInfo';
-import DeleteFlightButton from './DeleteFlightButton';
+import {deleteFlightFromCity} from '../redux/actions';
 
-export default class FlightCard extends React.Component {
+import FlightCardAirportInfo from './FlightCardAirportInfo';
+import DeleteButton from './DeleteButton';
+
+class FlightCard extends React.Component {
     static propTypes = {
         flight: PropTypes.object.isRequired
+    }
+
+    constructor(props) {
+        super(props);
+
+        this.deleteFlight = this.deleteFlight.bind(this);
+    }
+
+    deleteFlight() {
+        this.props.deleteFlightFromCity();
     }
 
     render() {
@@ -21,7 +34,7 @@ export default class FlightCard extends React.Component {
                     <Text style={styles.headerText}>{flight.airline}</Text>
                     <Text style={styles.headerText}>{flight.number}</Text>
                 </View>
-                <DeleteFlightButton />
+                <DeleteButton callback={this.deleteFlight}/>
             </View>
             <View>
                 <View style={styles.aitasSection}>
@@ -94,3 +107,5 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between'
     }
 });
+
+export default connect(null, {deleteFlightFromCity})(FlightCard);

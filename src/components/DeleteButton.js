@@ -1,6 +1,7 @@
 import React from 'react';
 import {View} from 'react-native';
 import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
 
 import {deleteFlightFromCity} from '../redux/actions';
 
@@ -8,6 +9,11 @@ import IconButton from './IconButton';
 import ConfirmationModal from './ConfirmationModal';
 
 class DeleteFlightButton extends React.Component {
+
+    static propTypes = {
+        callback: PropTypes.func.isRequired
+    }
+
     constructor(props) {
         super(props);
 
@@ -29,7 +35,7 @@ class DeleteFlightButton extends React.Component {
     }
 
     onFlightDeletion() {
-        this.props.deleteFlightFromCity();
+        this.props.callback();
         this.closeModal();
     }
 
@@ -38,7 +44,7 @@ class DeleteFlightButton extends React.Component {
             <IconButton iconName={'md-trash'} size={30} callback={this.activateModal}/>
             <ConfirmationModal
                 show={this.state.showModal}
-                message={'Are you sure?'}
+                message={'Are you sure you want to delete this?'}
                 onConfirmation={this.onFlightDeletion}
                 closeModal={this.closeModal}
             />

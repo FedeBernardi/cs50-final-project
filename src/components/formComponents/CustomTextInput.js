@@ -6,6 +6,7 @@ export default class CustomTextInput extends React.Component {
 
     static propTypes = {
         onChangeText: PropTypes.func.isRequired,
+        value: PropTypes.string,
         placeholder: PropTypes.string,
         keyboardType: PropTypes.string
     }
@@ -15,6 +16,7 @@ export default class CustomTextInput extends React.Component {
             style={styles.input}
             onChangeText={this.props.onChangeText}
             placeholder={this.props.placeholder}
+            value={this.props.value}
             keyboardType={this.props.keyboardType ? this.props.keyboardType : 'default'}
             underlineColorAndroid='transparent'
         />
