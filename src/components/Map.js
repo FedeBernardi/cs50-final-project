@@ -1,7 +1,6 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
-import {MapView, Location} from 'expo';
-import {Permissions} from 'expo';
+import {MapView, Location, Permissions} from 'expo';
 import PropTypes from 'prop-types';
 
 export default class Map extends React.Component{ 
@@ -10,7 +9,12 @@ export default class Map extends React.Component{
         address: PropTypes.string.isRequired,
         style: PropTypes.number.isRequired
     }
-    
+
+    /**
+     * It determines if the Location API is available to be used.
+     * It's set to false when the API is being used by other instance of
+     * this component.
+     */
     static geoRequestAvailable = true;
 
     state = {
@@ -35,12 +39,17 @@ export default class Map extends React.Component{
                 this.constructor.geoRequestAvailable = true;
                 clearInterval(this.interval);
             } catch(err) {
+                clearInterval(this.interval);
                 console.log(err);
             }
         }
     }
 
     componentDidMount() {
+        // Had to set an interval to keep executing the method that gets the
+        // information to show the marker to the user. Having more than one map
+        // on the same screen was making them to show the marker from the first one
+        // instead of showing the corresponding one.
         this.interval = setInterval(() => {
             this.getAddressLocation();
         }, 500);

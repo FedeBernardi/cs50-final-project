@@ -135,10 +135,12 @@ export default class LodgingScreen extends React.Component {
                                     </View>
                                 </Link>
                             }
-                            <View style={styles.addressRow}>
-                                <Icon name={'map-marker'} size={20}/>
-                                <Text style={styles.contactInfoText}>{lodging.address}</Text>
-                            </View>
+                            <Link url={`https://maps.google.com/?q=${lodging.address}`}>
+                                <View style={styles.addressRow}>
+                                    <Icon name={'map-marker'} size={20}/>
+                                    <Text style={styles.contactInfoText}>{lodging.address}</Text>
+                                </View>
+                            </Link>
                         </View>
                         <Map style={styles.map} address={lodging.address}/>
                     </View>
