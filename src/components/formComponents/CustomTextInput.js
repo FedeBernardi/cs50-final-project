@@ -1,5 +1,5 @@
 import React from 'react';
-import {TextInput, StyleSheet} from 'react-native';
+import {TextInput, KeyboardAvoidingView, StyleSheet} from 'react-native';
 import PropTypes from 'prop-types';
 
 export default class CustomTextInput extends React.Component {
@@ -8,20 +8,27 @@ export default class CustomTextInput extends React.Component {
         onChangeText: PropTypes.func.isRequired,
         value: PropTypes.string,
         placeholder: PropTypes.string,
-        keyboardType: PropTypes.string
+        keyboardType: PropTypes.string,
+        isMultiline: PropTypes.bool,
+        numberOfLines: PropTypes.number,
+        maxLength: PropTypes.number
     }
 
     render() {
-        return <TextInput
-            style={styles.input}
-            onChangeText={this.props.onChangeText}
-            placeholder={this.props.placeholder}
-            value={this.props.value}
-            keyboardType={this.props.keyboardType ? this.props.keyboardType : 'default'}
-            underlineColorAndroid='transparent'
-        />
+        return <KeyboardAvoidingView>
+            <TextInput
+                style={[styles.input, this.props.isMultiline ? styles.multilineStyles : {}]}
+                onChangeText={this.props.onChangeText}
+                placeholder={this.props.placeholder}
+                value={this.props.value}
+                keyboardType={this.props.keyboardType ? this.props.keyboardType : 'default'}
+                multiline={this.props.isMultiline}
+                numberOfLines={this.props.numberOfLines ? this.props.numberOfLines : null}
+                maxLength={this.props.maxLength ? this.props.maxLength : null}
+                underlineColorAndroid='transparent'
+            />
+        </KeyboardAvoidingView>
     }
-
 }
 
 const styles = StyleSheet.create({
@@ -32,5 +39,10 @@ const styles = StyleSheet.create({
         paddingLeft: 5,
         borderWidth: 1,
         backgroundColor: '#FFF'
+    },
+    multilineStyles: {
+        height: 100,
+        padding: 5,
+        textAlignVertical: 'top'
     }
 });

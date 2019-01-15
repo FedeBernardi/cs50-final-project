@@ -7,7 +7,8 @@ import {
     DELETE_FLIGHT,
     ADD_LODGING_INFO_TO_CITY,
     EDIT_LODGING_INFO,
-    DELETE_LODGING
+    DELETE_LODGING,
+    ADD_PLAN_TO_CITY
 } from '../actions';
 import {mergeObjects} from '../../utils/functions';
 
@@ -40,6 +41,8 @@ export default function tripReducer(state = initialState, action) {
             return modifyCity(state, action, editLodging);
         case DELETE_LODGING:
             return modifyCity(state, action, deleteLodgingInfo);
+        case ADD_PLAN_TO_CITY:
+            return modifyCity(state, action, addItineraryPlan);
     }
 
     return state;
@@ -102,6 +105,19 @@ function deleteLodgingInfo(city, action) {
     city.lodgingInfo.splice(action.lodgingIndex, 1);
     if (!city.lodgingInfo.length) {
         delete city.lodgingInfo;
+    }
+
+    return city;
+}
+
+function addItineraryPlan(city, action) {
+    const {plan, dateIndex, itineraryLength} = action;
+
+    city.itinerary = !!city.itinerary ? city.itinerary : new Array(itineraryLength);
+    if (city.itinerary[dateIndex]) {
+        city.itinerary[dateIndex].push(plan);
+    } else {
+        city.itinerary[dateIndex] = [plan];
     }
 
     return city;

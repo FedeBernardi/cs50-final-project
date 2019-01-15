@@ -2,6 +2,7 @@ import React from 'react';
 import {StyleSheet} from 'react-native';
 import ActionButton from 'react-native-action-button';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import ComunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import PropTypes from 'prop-types';
 
 export default class ActionButtons extends React.Component {
@@ -9,6 +10,15 @@ export default class ActionButtons extends React.Component {
     static propTypes = {
         buttons: PropTypes.array.isRequired,
         mainButtonColor: PropTypes.string
+    }
+
+    renderIcon(config) {
+        switch(config.familyIcon) {
+            case 'comunity':
+                return <ComunityIcon name={config.iconName} style={[styles.actionButtonIcon, config.extraStyles]} />;
+            default:
+                return <Icon name={config.iconName} style={[styles.actionButtonIcon, config.extraStyles]} />
+        }
     }
 
     render() {
@@ -21,7 +31,7 @@ export default class ActionButtons extends React.Component {
                     onPress={config.callback}
                     textStyle={styles.label}
                 >
-                    <Icon name={config.iconName} style={[styles.actionButtonIcon, config.extraStyles]} />
+                    {this.renderIcon(config)}
                 </ActionButton.Item>
             )}
         </ActionButton>
