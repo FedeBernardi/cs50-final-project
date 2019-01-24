@@ -132,11 +132,13 @@ export default class AddTripForm extends React.Component {
                         disabled={this.isAddCityDisabled()}
                         callback={this.addNewCity}
                         style={styles.addIcon}
+                        buttonBrand={IconButton.BUTTON_BRANDS.Ionicons}
                     />
                     <IconButton
                         iconName={'ios-trash'}
                         disabled={this.isRemoveCityDisabled()}
                         callback={this.removeCity}
+                        buttonBrand={IconButton.BUTTON_BRANDS.Ionicons}
                     />
                 </View>
             </View>

@@ -41,7 +41,12 @@ class DeleteFlightButton extends React.Component {
 
     render() {
         return <View>
-            <IconButton iconName={'md-trash'} size={30} callback={this.activateModal}/>
+            <IconButton
+                iconName={'md-trash'}
+                size={30}
+                callback={this.activateModal}
+                buttonBrand={IconButton.BUTTON_BRANDS.Ionicons}
+            />
             <ConfirmationModal
                 show={this.state.showModal}
                 message={'Are you sure you want to delete this?'}

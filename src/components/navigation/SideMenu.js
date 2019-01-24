@@ -48,7 +48,11 @@ class SideMenu extends React.Component {
         return <View style={styles.container}>
             <View style={styles.header}>
                 <Text style={styles.title}>Your Trips</Text>
-                <IconButton iconName={'ios-add-circle-outline'} callback={this.IconButtonCb}/>
+                <IconButton
+                    iconName={'ios-add-circle-outline'}
+                    callback={this.IconButtonCb}
+                    buttonBrand={IconButton.BUTTON_BRANDS.Ionicons}
+                />
             </View>
             <FlatList
                 data={this.props.trips}

@@ -124,7 +124,7 @@ class AddItineraryItemForm extends React.Component {
                         <IconButton
                             iconName={'clock-o'}
                             callback={this.openTimePicker}
-                            isFontAwesome={true}
+                            buttonBrand={IconButton.BUTTON_BRANDS.FontAwesome}
                             size={50}
                         />
                         <Text style={styles.time}>{this.state.hour === '' ? '-- : --' : this.state.hour}</Text>
