@@ -89,7 +89,13 @@ export default class LodgingScreen extends React.Component {
                         <View style={styles.infoContainer}>
                             <View style={styles.header}>
                                 <Text style={styles.headerTitle}>{lodging.name}</Text>
-                                <IconButton isFontAwesome={true} iconName={'edit'} size={30} callback={() => this.openModal(index)}/>
+                                <IconButton
+                                    isFontAwesome={true}
+                                    iconName={'edit'}
+                                    size={30}
+                                    callback={() => this.openModal(index)}
+                                    buttonBrand={IconButton.BUTTON_BRANDS.FontAwesome}
+                                />
                             </View>
                             <View style={styles.firstSection}>
                                 <View style={styles.datesSection}>

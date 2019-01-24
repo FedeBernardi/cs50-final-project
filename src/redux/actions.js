@@ -8,6 +8,7 @@ export const ADD_LODGING_INFO_TO_CITY = 'ADD_LODGING_INFO_TO_CITY';
 export const EDIT_LODGING_INFO = 'EDIT_LODGING_INFO';
 export const DELETE_LODGING = 'DELETE_LODGING';
 export const ADD_PLAN_TO_CITY = 'ADD_PLAN_TO_CITY';
+export const EDIT_DAY_PLANS_LIST = 'EDIT_DAY_PLANS_LIST';
 
 export const addTrip = (trip) => ({type: SAVE_TRIP, trip});
 
@@ -28,3 +29,5 @@ export const editLodgingInfo = (lodgingInfo, lodgingIndex) => ({type: EDIT_LODGI
 export const deleteLodgingInfo = (lodgingIndex) => ({type: DELETE_LODGING, lodgingIndex});
 
 export const addPlanToCity = (plan, dateIndex, itineraryLength) => ({type: ADD_PLAN_TO_CITY, plan, dateIndex, itineraryLength});
+
+export const editDayPlansList = (newOrder, dayPosition) => ({type: EDIT_DAY_PLANS_LIST, newOrder, dayPosition});

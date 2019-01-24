@@ -8,7 +8,8 @@ import {
     ADD_LODGING_INFO_TO_CITY,
     EDIT_LODGING_INFO,
     DELETE_LODGING,
-    ADD_PLAN_TO_CITY
+    ADD_PLAN_TO_CITY,
+    EDIT_DAY_PLANS_LIST
 } from '../actions';
 import {mergeObjects} from '../../utils/functions';
 
@@ -43,6 +44,8 @@ export default function tripReducer(state = initialState, action) {
             return modifyCity(state, action, deleteLodgingInfo);
         case ADD_PLAN_TO_CITY:
             return modifyCity(state, action, addItineraryPlan);
+        case EDIT_DAY_PLANS_LIST:
+            return modifyCity(state, action, reorderDayPlans);
     }
 
     return state;
@@ -119,6 +122,46 @@ function addItineraryPlan(city, action) {
     } else {
         city.itinerary[dateIndex] = [plan];
     }
+
+    return city;
+}
+
+/**
+ * Reorders the plans for a particular day in the itinerary.
+ * 
+ * @param {Object} city 
+ * @param {Object} action 
+ */
+function reorderDayPlans(city, action) {
+    let {itinerary} = city,
+        dayToEdit = null,
+        newDay = null,
+        dayPositionInItinerary = null,
+        daysWithPlans = -1;
+
+    // First we look for the original day in the itinerary.
+    // Since the position sent in the action referes to a filtered array
+    // I need to count how many days with dayPlans I iterated already.
+    for (let i = 0; i < itinerary.length; i++) {
+        if (itinerary[i] !== null) {
+            daysWithPlans++;
+            if (daysWithPlans === action.dayPosition) {
+                dayToEdit = itinerary[i];
+                dayPositionInItinerary = i;
+                break;
+            }
+        }
+    }
+
+    // Then we iterate moving the items given the new order.
+    newDay = Array(dayToEdit.length);
+    for (let j = 0; j < action.newOrder.length; j++) {
+        newDay[j] = dayToEdit[action.newOrder[j]];
+    }
+
+    // Lastly we assign it to the origina position in the itinerary array.
+    city.itinerary[dayPositionInItinerary] = [...newDay];
+    city.itinerary = [...city.itinerary];
 
     return city;
 }

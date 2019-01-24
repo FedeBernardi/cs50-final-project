@@ -1,11 +1,13 @@
 import React from 'react';
-import {View, Text, ScrollView, StyleSheet, Modal} from 'react-native';
-import ActionButtons from '../components/navigation/ActionButtons';
+import {View, ScrollView, StyleSheet, Modal} from 'react-native';
+import {connect} from 'react-redux';
 
+import ActionButtons from '../components/navigation/ActionButtons';
 import HeaderTitle from '../components/navigation/HeaderTitle';
 import AddItineraryItemForm from '../components/AddItineraryItemForm';
+import ItineraryDaysList from '../components/ItineraryDaysList';
 
-export default class ItineraryScreen extends React.Component {
+class ItineraryScreen extends React.Component {
     static navigationOptions = ({navigation}) => ({
         headerTitle: <HeaderTitle
             title={{title: 'Itinerary', subtitle: navigation.getParam('cityTitle')}}
@@ -56,7 +58,6 @@ export default class ItineraryScreen extends React.Component {
         const {showModal} = this.state;
 
         return <View style={styles.container}>
-            <Text>Itinerary Screen</Text>
             <Modal
                 visible={showModal}
                 transparent={false}
@@ -70,6 +71,7 @@ export default class ItineraryScreen extends React.Component {
                     />
                 </ScrollView>
             </Modal>
+            <ItineraryDaysList itinerary={this.props.itinerary}/>
             <ActionButtons buttons={this.actionButtonsConfig}/>
         </View>;
     }
@@ -83,3 +85,14 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFF'
     }
 });
+
+function mapStateToProps(store) {
+    const selectedTrip = store.trip.trips.filter(trip => trip.id === store.trip.selectedTrip)[0],
+          selectedCityIndex = store.trip.selectedCityIndex,
+          selectedCity = selectedTrip.cities[selectedCityIndex],
+          itinerary = selectedCity.itinerary.filter((day) => !!day);
+    
+    return {itinerary};
+}
+
+export default connect(mapStateToProps, null)(ItineraryScreen);
