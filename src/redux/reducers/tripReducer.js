@@ -9,7 +9,9 @@ import {
     EDIT_LODGING_INFO,
     DELETE_LODGING,
     ADD_PLAN_TO_CITY,
-    EDIT_DAY_PLANS_LIST
+    EDIT_DAY_PLANS_LIST,
+    EDIT_ITINERARY_ITEM,
+    DEELETE_ITINERARY_ITEM
 } from '../actions';
 import {mergeObjects} from '../../utils/functions';
 
@@ -46,6 +48,10 @@ export default function tripReducer(state = initialState, action) {
             return modifyCity(state, action, addItineraryPlan);
         case EDIT_DAY_PLANS_LIST:
             return modifyCity(state, action, reorderDayPlans);
+        case EDIT_ITINERARY_ITEM:
+            return modifyCity(state, action, editItineraryItem);
+        case DEELETE_ITINERARY_ITEM:
+            return modifyCity(state, action, deleteItineraryItem);
     }
 
     return state;
@@ -116,14 +122,20 @@ function deleteLodgingInfo(city, action) {
 function addItineraryPlan(city, action) {
     const {plan, dateIndex, itineraryLength} = action;
 
-    city.itinerary = !!city.itinerary ? city.itinerary : new Array(itineraryLength);
-    if (city.itinerary[dateIndex]) {
-        city.itinerary[dateIndex].push(plan);
-    } else {
-        city.itinerary[dateIndex] = [plan];
-    }
+    city.itinerary = city.itinerary.length ? city.itinerary : intializeItineraryArray(itineraryLength);
+    city.itinerary[dateIndex].push(plan);
 
     return city;
+}
+
+function intializeItineraryArray(itineraryLength) {
+    let itinerary = [];
+
+    for (let i = 0; i < itineraryLength; i++) {
+        itinerary.push([]);
+    }
+    
+    return itinerary;
 }
 
 /**
@@ -159,9 +171,37 @@ function reorderDayPlans(city, action) {
         newDay[j] = dayToEdit[action.newOrder[j]];
     }
 
-    // Lastly we assign it to the origina position in the itinerary array.
+    // Lastly we assign it to the original position in the itinerary array.
     city.itinerary[dayPositionInItinerary] = [...newDay];
     city.itinerary = [...city.itinerary];
+
+    return city;
+}
+
+function editItineraryItem(city, action) {
+    const {dayIndex, planIndex, plan, dateIndex} = action;
+    let {itinerary} = city;
+
+    // dayIndex is were the item is, dateIndex is where it was moved to
+    if (dayIndex !== dateIndex) {
+        itinerary[dayIndex].splice(planIndex, 1);
+        itinerary[dateIndex].push(plan);
+    } else {
+        itinerary[dayIndex][planIndex] = plan;
+    }
+
+    city.itinerary = [...itinerary];
+
+    return city;
+}
+
+function deleteItineraryItem(city, action) {
+    const {dayIndex, planIndex} = action;
+    let {itinerary} = city;
+
+    itinerary[dayIndex].splice(planIndex, 1);
+
+    city.itinerary = [...itinerary];
 
     return city;
 }

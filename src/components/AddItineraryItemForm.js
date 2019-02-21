@@ -12,12 +12,16 @@ import CustomTextInput from './formComponents/CustomTextInput';
 import DatePicker from './formComponents/DatePicker';
 import TypeSearch from './formComponents/TypeSearch';
 import IconButton from './IconButton';
+import DeleteButton from '../components/DeleteButton';
 
 class AddItineraryItemForm extends React.Component {
     static propTypes = {
         isEvent: PropTypes.bool.isRequired,
-        city: PropTypes.string.isRequired,
-        submitForm: PropTypes.func.isRequired
+        submitForm: PropTypes.func.isRequired,
+        onDeleteItem: PropTypes.func,
+        itemToEdit: PropTypes.object,
+        itemIndex: PropTypes.number,
+        dayIndex: PropTypes.number
     }
 
     constructor(props) {
@@ -91,15 +95,30 @@ class AddItineraryItemForm extends React.Component {
     }
 
     onSubmitForm() {
-        itineraryLength = getDiffBetweenDates(this.props.dates.from, this.props.dates.to);
+        itineraryLength = getDiffBetweenDates(this.props.dates.from, this.props.dates.to) + 1;
         dateIndex = getDiffBetweenDates(this.props.dates.from, this.state.selectedDate);
-        this.props.addPlanToCity({...this.state, isEvent: this.props.isEvent}, dateIndex, itineraryLength);
-        this.props.submitForm();
+        if (!!this.props.itemToEdit) {
+            //We need to do all in the details screen in order to handle the different scenarios.
+            this.props.submitForm(this.state, dateIndex);
+        } else {
+            this.props.addPlanToCity({...this.state, isEvent: this.props.isEvent}, dateIndex, itineraryLength);
+            this.props.submitForm();
+        }
     }
 
     render() {
+        const isEditing = this.props.itemToEdit !== undefined;
+
         return <View style={styles.container}>
-            <Text style={styles.title}>{'What do you have in mind?'}</Text>
+            {
+                !isEditing && <Text style={styles.title}>{'What do you have in mind?'}</Text>
+            }
+            {
+                isEditing && <View style={styles.editHeader}>
+                    <Text style={styles.title}>{'Change of plans?'}</Text>
+                    <DeleteButton callback={this.props.onDeleteItem} />
+                </View>
+            }
             <View style={styles.inputSection}>
                 <Text style={styles.label}>{'Title*'}</Text>
                 <CustomTextInput
@@ -164,6 +183,11 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 30
+    },
+    editHeader: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center'
     },
     title: {
         fontSize: 30,

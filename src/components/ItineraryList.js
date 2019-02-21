@@ -10,18 +10,19 @@ export default class ItineraryList extends React.Component {
         items: PropTypes.array.isRequired,
         order: PropTypes.array.isRequired,
         updateListCallback: PropTypes.func.isRequired,
-        isEditing: PropTypes.bool.isRequired
+        isEditing: PropTypes.bool.isRequired,
+        dayIndex: PropTypes.number.isRequired
     }
 
     render() {
-        const {items, isEditing, order, updateListCallback} = this.props;
+        const {items, isEditing, order, dayIndex, updateListCallback} = this.props;
 
         return !isEditing ?
-            items.map((item, index) => <ItineraryItem key={index} plan={item} />) :
+            items.map((item, index) => <ItineraryItem key={index} plan={item} dayIndex={dayIndex} planIndex={index}/>) :
             <SortableListView
                 data={items}
                 order={order}
-                renderRow={item => <ItineraryItem plan={item} isEditMode={true}/>}
+                renderRow={item => <ItineraryItem plan={item} isEditListMode={true}/>}
                 onRowMoved={e => {
                     order.splice(e.to, 0, order.splice(e.from, 1)[0]);
                     updateListCallback(order);

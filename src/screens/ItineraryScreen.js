@@ -90,7 +90,7 @@ function mapStateToProps(store) {
     const selectedTrip = store.trip.trips.filter(trip => trip.id === store.trip.selectedTrip)[0],
           selectedCityIndex = store.trip.selectedCityIndex,
           selectedCity = selectedTrip.cities[selectedCityIndex],
-          itinerary = selectedCity.itinerary.filter((day) => !!day);
+          itinerary = selectedCity.itinerary;
     
     return {itinerary};
 }

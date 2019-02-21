@@ -1,21 +1,39 @@
 import React from 'react';
 import {View, TouchableHighlight, Text, StyleSheet} from 'react-native';
+import {withNavigation} from 'react-navigation';
 import PropTypes from 'prop-types';
 
 import IconButton from './IconButton';
 
-export default class ItineraryItem extends React.Component {
+class ItineraryItem extends React.Component {
     static propTypes = {
         plan: PropTypes.object.isRequired,
-        isEditMode: PropTypes.bool
+        dayIndex: PropTypes.number,
+        planIndex: PropTypes.number,
+        isEditListMode: PropTypes.bool
+    }
+
+    constructor(props) {
+        super(props);
+
+        this.navigateToDetail = this.navigateToDetail.bind(this);
+    }
+
+    navigateToDetail() {
+        const {dayIndex, planIndex, plan} = this.props;
+        const params = {dayIndex, planIndex, title: plan.selectedDate};
+
+        this.props.navigation.navigate('ItineraryItemDetails', {params});
     }
 
     render() {
-        const {plan, isEditMode} = this.props;
+        const {plan, isEditListMode, sortHandlers} = this.props;
+        // The handlers will deferred depending on if it is edition mode or not.
+        const touchableHandlers = isEditListMode ? sortHandlers : {onPress: this.navigateToDetail}
 
         return <TouchableHighlight
-            underlayColor={'#eee'}
-            {...this.props.sortHandlers}
+            underlayColor={'#EEE'}
+            {...touchableHandlers}
         >
             <View style={styles.container}>
                 <View style={styles.titleContainer}>
@@ -23,21 +41,21 @@ export default class ItineraryItem extends React.Component {
                 </View>
                 <View style={styles.iconsContainer}>
                     {
-                        !!plan.address && !isEditMode && <IconButton
+                        !!plan.address && !isEditListMode && <IconButton
                             iconName={'map'}
                             buttonBrand={IconButton.BUTTON_BRANDS.MaterialCommunityIcons}
                             size={15}
                         />
                     }
                     {
-                        !!plan.description && !isEditMode && <IconButton
+                        !!plan.description && !isEditListMode && <IconButton
                             iconName={'text-subject'}
                             buttonBrand={IconButton.BUTTON_BRANDS.MaterialCommunityIcons}
                             size={15}
                         />
                     }
                     {
-                        isEditMode && <IconButton
+                        isEditListMode && <IconButton
                             iconName={'md-menu'}
                             buttonBrand={IconButton.BUTTON_BRANDS.Ionicons}
                             size={25}
@@ -63,3 +81,5 @@ const styles = StyleSheet.create({
         fontSize: 18
     }
 });
+
+export default withNavigation(ItineraryItem);

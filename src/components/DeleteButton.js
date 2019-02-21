@@ -8,7 +8,7 @@ import {deleteFlightFromCity} from '../redux/actions';
 import IconButton from './IconButton';
 import ConfirmationModal from './ConfirmationModal';
 
-class DeleteFlightButton extends React.Component {
+class DeleteButton extends React.Component {
 
     static propTypes = {
         callback: PropTypes.func.isRequired
@@ -21,7 +21,7 @@ class DeleteFlightButton extends React.Component {
             showModal: false
         }
 
-        this.onFlightDeletion = this.onFlightDeletion.bind(this);
+        this.onDelete = this.onDelete.bind(this);
         this.closeModal = this.closeModal.bind(this);
         this.activateModal = this.activateModal.bind(this);
     }
@@ -34,7 +34,7 @@ class DeleteFlightButton extends React.Component {
         this.setState({showModal: true});
     }
 
-    onFlightDeletion() {
+    onDelete() {
         this.props.callback();
         this.closeModal();
     }
@@ -50,11 +50,11 @@ class DeleteFlightButton extends React.Component {
             <ConfirmationModal
                 show={this.state.showModal}
                 message={'Are you sure you want to delete this?'}
-                onConfirmation={this.onFlightDeletion}
+                onConfirmation={this.onDelete}
                 closeModal={this.closeModal}
             />
         </View>;
     }
 }
 
-export default connect(null, {deleteFlightFromCity})(DeleteFlightButton);
+export default connect(null, {deleteFlightFromCity})(DeleteButton);

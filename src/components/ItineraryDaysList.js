@@ -15,21 +15,23 @@ export default class ItineraryDaysList extends React.Component {
         super(props);
 
         this.processItinerary = this.processItinerary.bind(this);
-        this.getDayPlansObject = this.getDayPlansObject.bind(this);
     }
 
     processItinerary() {
-        return this.props.itinerary.map(this.getDayPlansObject);
-    }
-
-    getDayPlansObject(dayPlans, index) {
-        const date = getDateString(dayPlans[0].selectedDate);
-        return {title: date, dayPosition: index};
+        return this.props.itinerary.map((dayPlans, index) => {
+            return dayPlans.length ?
+                {title: getDateString(dayPlans[0].selectedDate), dayPosition: index} :
+                null;
+        });
     }
 
     render() {
         return <ScrollView style={styles.scrollContainer}>
-            {this.processItinerary().map((day, index) => <ItineraryDayButton key={index} dayPlans={day}/>)}
+            {
+                this.processItinerary()
+                    .filter((day) => !!day)
+                    .map((day, index) => <ItineraryDayButton key={index} dayPlans={day}/>)
+            }
         </ScrollView>
     }
 }

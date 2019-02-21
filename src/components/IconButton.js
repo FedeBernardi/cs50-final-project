@@ -12,6 +12,7 @@ export default class IconButton extends React.Component {
         callback: PropTypes.func,
         size: PropTypes.number,
         text: PropTypes.string,
+        stylesContainer: PropTypes.number,
         disabled: PropTypes.bool,
     }
 
@@ -40,10 +41,10 @@ export default class IconButton extends React.Component {
     }
 
     getIcon() {
-        const {buttonBrand, text} = this.props;
+        const {buttonBrand, text, stylesContainer} = this.props;
         const Comp = buttonBrand;
 
-        return <View>
+        return <View style={stylesContainer}>
             {text && <Text>{this.props.text}</Text>}
             {
                 Comp &&

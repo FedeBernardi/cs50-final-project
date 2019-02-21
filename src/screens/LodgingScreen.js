@@ -10,6 +10,7 @@ import Map from '../components/Map';
 import Link from '../components/Link';
 import IconButton from '../components/IconButton';
 import LodgingForm from '../components/LodgingForm';
+import MapLink from '../components/MapLink';
 
 export default class LodgingScreen extends React.Component {
 
@@ -90,7 +91,6 @@ export default class LodgingScreen extends React.Component {
                             <View style={styles.header}>
                                 <Text style={styles.headerTitle}>{lodging.name}</Text>
                                 <IconButton
-                                    isFontAwesome={true}
                                     iconName={'edit'}
                                     size={30}
                                     callback={() => this.openModal(index)}
@@ -141,12 +141,10 @@ export default class LodgingScreen extends React.Component {
                                     </View>
                                 </Link>
                             }
-                            <Link url={`https://maps.google.com/?q=${lodging.address}`}>
-                                <View style={styles.addressRow}>
-                                    <Icon name={'map-marker'} size={20}/>
-                                    <Text style={styles.contactInfoText}>{lodging.address}</Text>
-                                </View>
-                            </Link>
+                            <MapLink
+                                address={lodging.address}
+                                stylesContainer={styles.addressRow}
+                            />
                         </View>
                         <Map style={styles.map} address={lodging.address}/>
                     </View>
@@ -172,7 +170,6 @@ const styles = StyleSheet.create({
         marginLeft: 10
     },
     addressRow: {
-        flexDirection: 'row',
         marginTop: 10
     },
     header: {

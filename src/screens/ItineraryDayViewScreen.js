@@ -60,7 +60,6 @@ class ItineraryDayViewScreen extends React.Component {
     }
 
     render() {
-        //const items = this.props.navigation.getParam('dayPlans').dayPlans;
         const dayPosition = this.props.navigation.getParam('dayPlans').dayPosition;
         const items = this.props.itinerary[dayPosition];
 
@@ -69,6 +68,7 @@ class ItineraryDayViewScreen extends React.Component {
             order={this.state.listOrder}
             updateListCallback={this.updateListOrder}
             isEditing={this.state.isEditionMode}
+            dayIndex={dayPosition}
         />;
     }
 }
@@ -77,7 +77,7 @@ function mapStateToProps(store) {
     const selectedTrip = store.trip.trips.filter(trip => trip.id === store.trip.selectedTrip)[0],
           selectedCityIndex = store.trip.selectedCityIndex,
           selectedCity = selectedTrip.cities[selectedCityIndex],
-          itinerary = selectedCity.itinerary.filter((day) => !!day);
+          itinerary = selectedCity.itinerary;
 
     return {itinerary};
 }
