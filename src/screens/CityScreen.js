@@ -10,6 +10,7 @@ import FlightCard from '../components/FlightCard';
 import AddFlightForm from '../components/AddFlightForm';
 import LodgingForm from '../components/LodgingForm';
 import LodgingCard from '../components/LodgingCard';
+import ActionButton from '../components/ActionButton';
 
 const MODAL_TYPES = {
     FLIGHT: 'FLIGHT',
@@ -37,6 +38,7 @@ class CityScreen extends React.Component {
         this.addLodgingCallback = this.addLodgingCallback.bind(this);
         this.closeModal = this.closeModal.bind(this);
         this.onTapLodgingCard = this.onTapLodgingCard.bind(this);
+        this.onTapItineraryButton = this.onTapItineraryButton.bind(this);
 
         this.actionButtonsConfig = [
             {
@@ -90,6 +92,15 @@ class CityScreen extends React.Component {
         );
     }
 
+    onTapItineraryButton() {
+        this.props.navigation.navigate(
+            'Itinerary',
+            {
+                cityTitle: this.props.selectedCity.cityName
+            }
+        );
+    }
+
     render() {
         const {prevCity, nextCity, selectedCity} = this.props,
               currentCity = createCityDatesObject(selectedCity),
@@ -98,12 +109,12 @@ class CityScreen extends React.Component {
         return <View style={styles.container}>
             <ScrollView style={styles.scroll}>
                 <CityDatesCard currentCity={currentCity} prevCity={prevCity} nextCity={nextCity}/>
-                {selectedCity.flight && <FlightCard flight={selectedCity.flight}/>}
+                <ActionButton callback={this.onTapItineraryButton} label={'Itinerary'}/>
                 {selectedCity.lodgingInfo && <LodgingCard
                     lodgingInfo={selectedCity.lodgingInfo}
                     handlingTap={this.onTapLodgingCard}
                 />}
-                <Button title={'Itinerary'} onPress={() => this.props.navigation.navigate('Itinerary')}></Button>
+                {selectedCity.flight && <FlightCard flight={selectedCity.flight}/>}
                 <Button title={'Tickets'} onPress={() => this.props.navigation.navigate('Tickets')}></Button>
             </ScrollView>
             <Modal

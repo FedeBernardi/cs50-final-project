@@ -7,7 +7,11 @@ import {
     DELETE_FLIGHT,
     ADD_LODGING_INFO_TO_CITY,
     EDIT_LODGING_INFO,
-    DELETE_LODGING
+    DELETE_LODGING,
+    ADD_PLAN_TO_CITY,
+    EDIT_DAY_PLANS_LIST,
+    EDIT_ITINERARY_ITEM,
+    DEELETE_ITINERARY_ITEM
 } from '../actions';
 import {mergeObjects} from '../../utils/functions';
 
@@ -40,6 +44,14 @@ export default function tripReducer(state = initialState, action) {
             return modifyCity(state, action, editLodging);
         case DELETE_LODGING:
             return modifyCity(state, action, deleteLodgingInfo);
+        case ADD_PLAN_TO_CITY:
+            return modifyCity(state, action, addItineraryPlan);
+        case EDIT_DAY_PLANS_LIST:
+            return modifyCity(state, action, reorderDayPlans);
+        case EDIT_ITINERARY_ITEM:
+            return modifyCity(state, action, editItineraryItem);
+        case DEELETE_ITINERARY_ITEM:
+            return modifyCity(state, action, deleteItineraryItem);
     }
 
     return state;
@@ -103,6 +115,93 @@ function deleteLodgingInfo(city, action) {
     if (!city.lodgingInfo.length) {
         delete city.lodgingInfo;
     }
+
+    return city;
+}
+
+function addItineraryPlan(city, action) {
+    const {plan, dateIndex, itineraryLength} = action;
+
+    city.itinerary = city.itinerary.length ? city.itinerary : intializeItineraryArray(itineraryLength);
+    city.itinerary[dateIndex].push(plan);
+
+    return city;
+}
+
+function intializeItineraryArray(itineraryLength) {
+    let itinerary = [];
+
+    for (let i = 0; i < itineraryLength; i++) {
+        itinerary.push([]);
+    }
+    
+    return itinerary;
+}
+
+/**
+ * Reorders the plans for a particular day in the itinerary.
+ * 
+ * @param {Object} city 
+ * @param {Object} action 
+ */
+function reorderDayPlans(city, action) {
+    let {itinerary} = city,
+        dayToEdit = null,
+        newDay = null,
+        dayPositionInItinerary = null,
+        daysWithPlans = -1;
+
+    // First we look for the original day in the itinerary.
+    // Since the position sent in the action referes to a filtered array
+    // I need to count how many days with dayPlans I iterated already.
+    for (let i = 0; i < itinerary.length; i++) {
+        if (itinerary[i] !== null) {
+            daysWithPlans++;
+            if (daysWithPlans === action.dayPosition) {
+                dayToEdit = itinerary[i];
+                dayPositionInItinerary = i;
+                break;
+            }
+        }
+    }
+
+    // Then we iterate moving the items given the new order.
+    newDay = Array(dayToEdit.length);
+    for (let j = 0; j < action.newOrder.length; j++) {
+        newDay[j] = dayToEdit[action.newOrder[j]];
+    }
+
+    // Lastly we assign it to the original position in the itinerary array.
+    city.itinerary[dayPositionInItinerary] = [...newDay];
+    city.itinerary = [...city.itinerary];
+
+    return city;
+}
+
+function editItineraryItem(city, action) {
+    const {dayIndex, planIndex, plan, dateIndex} = action;
+    let {itinerary} = city;
+
+    // dayIndex is were the item is, dateIndex is where it was moved to
+    if (dayIndex !== dateIndex) {
+        itinerary[dayIndex].splice(planIndex, 1);
+        itinerary[dateIndex].push(plan);
+    } else {
+        itinerary[dayIndex][planIndex] = plan;
+    }
+
+    city.itinerary = [...itinerary];
+
+    return city;
+}
+
+function deleteItineraryItem(city, action) {
+    const {dayIndex, planIndex} = action;
+    let {itinerary} = city;
+
+    itinerary[dayIndex].splice(planIndex, 1);
+
+    city.itinerary = [...itinerary];
 
     return city;
 }

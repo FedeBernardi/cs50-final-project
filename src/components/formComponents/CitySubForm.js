@@ -51,7 +51,8 @@ export default class CitySubForm extends React.Component {
             dates: {
                 from: this.state.fromDate,
                 to: this.state.toDate
-            }
+            },
+            itinerary: []
         }
         this.props.onSaveHandler(cityObject);
     }

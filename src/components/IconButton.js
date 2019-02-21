@@ -2,16 +2,24 @@ import React from 'react';
 import {TouchableHighlight, Text, View} from 'react-native';
 import PropTypes from 'prop-types';
 import {Ionicons} from '@expo/vector-icons';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export default class IconButton extends React.Component {
     static propTypes = {
         iconName: PropTypes.string.isRequired,
-        callback: PropTypes.func.isRequired,
-        isFontAwesome: PropTypes.bool,
+        buttonBrand: PropTypes.func.isRequired,
+        callback: PropTypes.func,
         size: PropTypes.number,
         text: PropTypes.string,
+        stylesContainer: PropTypes.number,
         disabled: PropTypes.bool,
+    }
+
+    static BUTTON_BRANDS = {
+        Ionicons: Ionicons,
+        FontAwesome: FontAwesome,
+        MaterialCommunityIcons: MaterialCommunityIcons
     }
 
     constructor(props) {
@@ -32,25 +40,25 @@ export default class IconButton extends React.Component {
         return typeof disabled !== 'undefined' && disabled;
     }
 
+    getIcon() {
+        const {buttonBrand, text, stylesContainer} = this.props;
+        const Comp = buttonBrand;
+
+        return <View style={stylesContainer}>
+            {text && <Text>{this.props.text}</Text>}
+            {
+                Comp &&
+                    <Comp name={this.props.iconName}
+                        size={this.props.size ? this.props.size : 40}
+                        style={this.isButtonDisabled() ? {color: 'grey'} : {}}
+                    />
+            }
+        </View>;
+    }
+
     render() {
-        return <TouchableHighlight onPress={this.pressHandler}>
-            <View>
-                {this.props.text && <Text>{this.props.text}</Text>}
-                {
-                    !this.props.isFontAwesome && <Ionicons
-                        name={this.props.iconName}
-                        size={this.props.size ? this.props.size : 40}
-                        style={this.isButtonDisabled() ? {color: 'grey'} : {}}
-                    />
-                }
-                {
-                    this.props.isFontAwesome && <Icon
-                        name={this.props.iconName}
-                        size={this.props.size ? this.props.size : 40}
-                        style={this.isButtonDisabled() ? {color: 'grey'} : {}}
-                    />
-                }
-            </View>
-        </TouchableHighlight>
+        return this.props.callback ?
+            <TouchableHighlight onPress={this.pressHandler}>{this.getIcon()}</TouchableHighlight> :
+            this.getIcon();
     }
 }
